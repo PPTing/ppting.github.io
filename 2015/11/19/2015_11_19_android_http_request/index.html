@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Android 网络请求 · PPTing's Blog</title><meta name="description" content="Android 网络请求 - PPTing"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://ppting.me/atom.xml" title="PPTing's Blog"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/PPTingKJ" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/PPTing" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Android 网络请求</h1><div class="post-info">2015年11月19日</div><div class="post-content"><p>##HttpClient (Apache)<br>6.0中已经移除了这个方法，Google建议使用HttpUrlConnection 见<a href="https://developer.android.com/intl/zh-cn/about/versions/marshmallow/android-6.0-changes.html" target="_blank" rel="external">Android  6.0 Changes
+</a></p>
+<a id="more"></a>
+<p>###GET 方法</p>
+<ul>
+<li><p>新建一个HttpGet对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HttpGet httpGet = <span class="keyword">new</span> HttpGet(<span class="string">"https://baidu.com"</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>获取HtttpClient实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HttpClient httpClient = <span class="keyword">new</span> DefaultHttpClient();</div></pre></td></tr></table></figure>
+</li>
+<li><p>获取HttpResponse实例 并传入HttpGet对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HttpResponse response = httpClient.execute(httpGet);</div></pre></td></tr></table></figure>
+</li>
+<li><p>判断是否请求成功</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(response.getStatusLine().getStatusCode()==<span class="number">200</span>)</div><div class="line">&#123;<span class="comment">//do something</span></div><div class="line">HttpEntity httpEntity = response.getEntity();</div><div class="line">String result = EntityUtils.toString(httpEntity);</div><div class="line">String result = EntityUtils.toString(response.getEntity(),<span class="string">"UTF-8"</span>);<span class="comment">//带中文的话</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>POST 方法</p>
+<ul>
+<li><p>新建一个HttpGet对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HttpGet httpPost = <span class="keyword">new</span> HttpPost(<span class="string">"https://baidu.com"</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>获取HtttpClient实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HttpClient httpClient = <span class="keyword">new</span> DefaultHttpClient();</div></pre></td></tr></table></figure>
+</li>
+<li><p>设置POST参数(1)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">List&lt;NameValuePair&gt; params = <span class="keyword">new</span> ArrayList&lt;NameValuePair&gt;();</div><div class="line">params.add(<span class="keyword">new</span> BasicNameValuePair(<span class="string">"username"</span>, <span class="string">"username"</span>));</div><div class="line">params.add(<span class="keyword">new</span> BasicNameValuePair(<span class="string">"password"</span>, <span class="string">"password"</span>));</div><div class="line"><span class="comment">//添加内容到请求中</span></div><div class="line">UrlEncodedFormEntity entity = <span class="keyword">new</span> UrlEncodedFromEntity(params,<span class="string">"UTF-8"</span>);</div><div class="line">httpPost.setEntity(entity);</div></pre></td></tr></table></figure>
+</li>
+<li><p>设置POST参数(2)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">NameValuePair namePair = <span class="keyword">new</span> BasicNameValuePair(<span class="string">"username"</span>,<span class="string">"username"</span>);</div><div class="line">NameValuePair pswPair = <span class="keyword">new</span> BasicNameValuePair(<span class="string">"password"</span>,<span class="string">"password"</span>);</div><div class="line">List&lt;NameValuePair&gt; pairList = <span class="keyword">new</span> ArrayList&lt;NameValuePair&gt;();</div><div class="line">pariList.add(namePair);</div><div class="line"><span class="comment">//添加内容到请求中</span></div><div class="line">HttpEntity httpEntity = <span class="keyword">new</span> UrlEncodedFormEntity(pairlist);</div><div class="line">httpPost.setEntity(httpEntity);</div></pre></td></tr></table></figure>
+</li>
+<li><p>获取HttpResponse实例 并传入HttpGet对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HttpResponse response = httpClient.execute(httpPost);</div></pre></td></tr></table></figure>
+</li>
+<li><p>判断是否请求成功</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(response.getStatusLine().getStatusCode()==<span class="number">200</span>)</div><div class="line">&#123;<span class="comment">//do something</span></div><div class="line">HttpEntity httpEntity = response.getEntity();</div><div class="line">String result = EntityUtils.toString(httpEntity);</div><div class="line"><span class="comment">//String result = EntityUtils.toString(response.getEntity(),”UTF-8”);//带中文的话</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>##<a href="https://developer.android.com/intl/zh-cn/reference/java/net/HttpURLConnection.html" target="_blank" rel="external">HttpUrlConnection</a></p>
+<h3 id="GET-方法"><a href="#GET-方法" class="headerlink" title="GET 方法"></a>GET 方法</h3><ul>
+<li><p>先new一个Url 对象，并传入网址</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Url url = <span class="keyword">new</span> Url(<span class="string">"https://baidu.com"</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>打开一个HttpUrlConnection连接</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HttpUrlConnection httpUrlConnection = (HttpUrlConnection) url.openConnection();</div></pre></td></tr></table></figure>
+</li>
+<li><p>设置get或者post方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">httpUrlConnection.setRequestMethod(“GET”);</div></pre></td></tr></table></figure>
+</li>
+<li><p>定制一些信息 比如超时时间，title等</p>
+</li>
+<li><p>调用getInputStream 获取服务器返回的输入流</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">InputStream in = httpUrlConnection.getInputStream();</div><div class="line"><span class="comment">//对获取到的输入流进行读取</span></div><div class="line">BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</div><div class="line">StringBuilder response = <span class="keyword">new</span> StringBuilder();</div><div class="line">String line;</div><div class="line"><span class="keyword">while</span> ((line = reader.readLine()) != <span class="keyword">null</span>) &#123;</div><div class="line">    response.append(line);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>关闭连接</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">httpUrlConnection.disconnect();</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="POST-方法"><a href="#POST-方法" class="headerlink" title="POST 方法"></a>POST 方法</h3><ul>
+<li>前面都一样<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">httpUrlConnection.setRequestMethod(<span class="string">"POST"</span>);</div><div class="line">DataOutputStream dataOutputStream = <span class="keyword">new</span> DataOutputStream(httpUrlConnection.getOutputStream);</div><div class="line">dataOutputStream.writeBytes(<span class="string">"username=XXX&amp;password=YYY"</span>);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a href="/2016/04/14/2016_04_14_statusbar/" class="prev">PREV</a><a href="/2015/10/29/2015_10_29_use_CollapsingToolbarLayout/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ppting';
+var disqus_identifier = '2015/11/19/2015_11_19_android_http_request/';
+var disqus_title = 'Android 网络请求';
+var disqus_url = 'https://ppting.me/2015/11/19/2015_11_19_android_http_request/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//ppting.disqus.com/count.js" async></script><div class="copyright"><p>© 2015 - 2017 <a href="https://ppting.me">PPTing</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-51029889-1",'auto');ga('send','pageview');</script></body></html>

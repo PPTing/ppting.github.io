@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Nexus5刷机命令记录 · PPTing's Blog</title><meta name="description" content="Nexus5刷机命令记录 - PPTing"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://ppting.me/atom.xml" title="PPTing's Blog"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/PPTingKJ" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/PPTing" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Nexus5刷机命令记录</h1><div class="post-info">2015年5月21日</div><div class="post-content"><p>mark记录下免得下次又忘了</p>
+<ul>
+<li>首先用<strong>电源键+音量下</strong> 或者 <code>adb reboot bootloader</code>进入Fastboot模式</li>
+<li>将整个刷机镜像包解压，并将压缩包里面的另一个压缩包解压并将其中的所有<code>.img</code>文件复制到根目录下</li>
+<li>用命令行进入该根目录</li>
+<li><code>fastboot device</code> 查看手机是否已经和电脑连接好了<br><br>如果连接好了会出现下图所示的一行命令<br><img src="https://ooo.0o0.ooo/2017/01/07/5870eb1df030c.png" alt="连接手机"></li>
+<li><code>adb reboot bootloader</code> 重启至bootloader</li>
+<li><code>adb sideload XXXXX.zip</code> 先进入recovery 然后按电源键 和 音量+ 选择 Apply update from adb</li>
+<li><code>fastboot flash bootloader bootloader-XXXXXXX.img</code> 刷入bootloader-XXXXXXX文件</li>
+<li><code>fastboot flash radio radio-XXXXXXX.img</code> 刷入基带文件<strong>（因为我不想刷入该基带所以我没有刷入）</strong></li>
+<li><code>fastboot reboot-bootloader</code> 刷入成功后重启bootloader进入fastboot模式<br><img src="https://ooo.0o0.ooo/2017/01/07/5870eb1dcb30f.png" alt=""></li>
+<li><code>fastboot flash recovery recovery.img</code> 刷入recovery文件<strong>（我没有刷入，后面自己刷入了TWRP）</strong></li>
+<li><code>fastboot flash boot boot.img</code> 刷入内核</li>
+<li><code>fastboot flash system system.img</code> 刷入系统文件<br><strong><em>下面两步刷入会清除数据</em></strong>我不想清除数据所以没有刷入</li>
+<li><code>fastboot flash cache cache.img</code></li>
+<li><code>fastboot flash userdata userdata.img</code><br><img src="https://ooo.0o0.ooo/2017/01/07/5870eb1db5c76.png" alt=""></li>
+<li><code>fastboot reboot</code> 重启手机等待优化升级大功告成</li>
+</ul>
+<p>##其他命令</p>
+<ul>
+<li><code>fastboot oem unlock</code>解锁</li>
+<li><code>fastboot oem lock</code>重新上锁</li>
+</ul>
+</div></article></div></main><footer><div class="paginator"><a href="/2015/06/01/2015_06_01_runman_android/" class="prev">PREV</a><a href="/2015/03/19/2015_03_19_zuji_live_as_a_moive/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ppting';
+var disqus_identifier = '2015/05/21/2015_05_21_nexus_fastboot/';
+var disqus_title = 'Nexus5刷机命令记录';
+var disqus_url = 'https://ppting.me/2015/05/21/2015_05_21_nexus_fastboot/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//ppting.disqus.com/count.js" async></script><div class="copyright"><p>© 2015 - 2017 <a href="https://ppting.me">PPTing</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-51029889-1",'auto');ga('send','pageview');</script></body></html>
