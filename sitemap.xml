@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://ppting.me/2018/04/14/2018_04_14_justify-in-android/</loc>
+    
+    <lastmod>2018-04-14T04:07:29.695Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://ppting.me/2017/12/24/2017_12_24_component_for_android/</loc>
     
     <lastmod>2017-12-24T08:09:30.779Z</lastmod>
@@ -170,28 +177,7 @@
   </url>
   
   <url>
-    <loc>https://ppting.me/2015/02/21/2015_02_21_something_about_winter_holiday/</loc>
-    
-    <lastmod>2017-01-07T11:55:09.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://ppting.me/2015/09/20/2015_09_20_internship_recode/</loc>
-    
-    <lastmod>2017-01-07T11:55:09.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://ppting.me/2014/07/12/2014_07_14_learn_html5_no3/</loc>
-    
-    <lastmod>2017-01-07T11:55:09.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://ppting.me/2015/03/08/2015_03_08_use_git_tips/</loc>
     
     <lastmod>2017-01-07T11:55:09.000Z</lastmod>
     
@@ -205,13 +191,6 @@
   </url>
   
   <url>
-    <loc>https://ppting.me/2015/02/06/2015_02_06_travel_to_yangshuo_guilin/</loc>
-    
-    <lastmod>2017-01-07T11:55:09.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://ppting.me/2015/03/19/2015_03_19_zuji_live_as_a_moive/</loc>
     
     <lastmod>2017-01-07T11:55:09.000Z</lastmod>
@@ -219,7 +198,14 @@
   </url>
   
   <url>
-    <loc>https://ppting.me/2015/01/26/2015_01_26_change_jacman_theme/</loc>
+    <loc>https://ppting.me/2015/02/21/2015_02_21_something_about_winter_holiday/</loc>
+    
+    <lastmod>2017-01-07T11:55:09.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://ppting.me/2015/02/06/2015_02_06_travel_to_yangshuo_guilin/</loc>
     
     <lastmod>2017-01-07T11:55:09.000Z</lastmod>
     
@@ -233,7 +219,28 @@
   </url>
   
   <url>
+    <loc>https://ppting.me/2014/07/12/2014_07_14_learn_html5_no3/</loc>
+    
+    <lastmod>2017-01-07T11:55:09.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://ppting.me/2014/05/14/2014_05_21_to_my_sister/</loc>
+    
+    <lastmod>2017-01-07T11:55:09.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://ppting.me/2015/01/26/2015_01_26_change_jacman_theme/</loc>
+    
+    <lastmod>2017-01-07T11:55:09.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://ppting.me/2015/03/08/2015_03_08_use_git_tips/</loc>
     
     <lastmod>2017-01-07T11:55:09.000Z</lastmod>
     
