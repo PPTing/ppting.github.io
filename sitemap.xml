@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://ppting.me/2014/05/26/2014_05_26_ultimate/</loc>
+    
+    <lastmod>2018-08-19T03:26:06.172Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://ppting.me/2018/06/07/hashmap/</loc>
     
     <lastmod>2018-06-07T15:14:13.283Z</lastmod>
@@ -68,13 +75,6 @@
     <loc>https://ppting.me/2015/02/07/2015_02_07_apply_domains/</loc>
     
     <lastmod>2017-01-07T13:39:03.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://ppting.me/2014/05/26/2014_05_26_ultimate/</loc>
-    
-    <lastmod>2017-01-07T13:36:54.000Z</lastmod>
     
   </url>
   
@@ -184,13 +184,6 @@
   </url>
   
   <url>
-    <loc>https://ppting.me/2015/03/08/2015_03_08_use_git_tips/</loc>
-    
-    <lastmod>2017-01-07T11:55:09.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://ppting.me/2015/10/02/2015_10_02_parse_json/</loc>
     
     <lastmod>2017-01-07T11:55:09.000Z</lastmod>
@@ -199,6 +192,13 @@
   
   <url>
     <loc>https://ppting.me/2014/07/12/2014_07_14_learn_html5_no3/</loc>
+    
+    <lastmod>2017-01-07T11:55:09.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://ppting.me/2015/03/08/2015_03_08_use_git_tips/</loc>
     
     <lastmod>2017-01-07T11:55:09.000Z</lastmod>
     
