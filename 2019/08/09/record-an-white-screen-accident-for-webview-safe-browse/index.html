@@ -26,11 +26,9 @@
 <p>原来在 Android O 以后，WebView 的安全浏览策略(Google Safe Browsing) 会在 WebView 中默认开启，Google 自己会维护一份清单判断哪些网站是”有害的“提醒用户，并通过 Google Play Service 同步到用户设备中，而我们的域名刚好被 Google 认为是”有害的“，导致了我们的 HTML5 业务的页面无法打开。</p>
 <p>而这也正好解决了我的疑问：为什么前端同事的手机可以正常打开，而我和测试同事的手机却不行，因为我和测试同事的手机为了测试海外版的支付功能都安装了 Google Play Service 而前端同事的手机没有安装 Google Play Service 。所以没有同步”有害网站“</p>
 <p>知道了原因后解决起来就很容易了</p>
-<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><h4 id="申诉"><a href="#申诉" class="headerlink" title="申诉"></a>申诉</h4><pre><code>[管理有关不安全网站的警告
-](https://support.google.com/chrome/answer/99020)
-
-[请求审核的地址](https://developers.google.com/web/fundamentals/security/hacked/request_review)
-</code></pre><h4 id="代码中强制设置不使用『安全浏览策略』"><a href="#代码中强制设置不使用『安全浏览策略』" class="headerlink" title="代码中强制设置不使用『安全浏览策略』"></a>代码中强制设置不使用『安全浏览策略』</h4><ul>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><h4 id="申诉"><a href="#申诉" class="headerlink" title="申诉"></a>申诉</h4><p><a href="https://support.google.com/chrome/answer/99020" target="_blank" rel="external">管理有关不安全网站的警告</a></p>
+<p><a href="https://developers.google.com/web/fundamentals/security/hacked/request_review" target="_blank" rel="external">请求审核的地址</a></p>
+<h4 id="代码中强制设置不使用『安全浏览策略』"><a href="#代码中强制设置不使用『安全浏览策略』" class="headerlink" title="代码中强制设置不使用『安全浏览策略』"></a>代码中强制设置不使用『安全浏览策略』</h4><ul>
 <li><p>Android O 以上</p>
 <p>  <code>webviewSetting.setSafeBrowsingEnabled(false)</code></p>
 <p>  但这个方法只能用于 API 26 以上，如果在 API 26 一下，则需要在 AndroidManifest 中进行声明</p>
