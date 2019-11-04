@@ -5,10 +5,10 @@
 <li>复制 git hook 脚本<br></li>
 </ol>
 <p>2.1 在根目录下执行执行<br>Windows:</p>
-<p>  2.1.1 修改 <code>post-commit-windows</code> 文件中的第一行代码中的<code>D:/Git</code>为自己本机电脑的 <code>Git</code> 安装目录，即第一行代码为声明 <code>sh.exe</code> 的目录<br>  2.1.2 执行 <code>gradle installGitHooks</code></p>
+<p>  2.1.1 修改 <code>pre-commit-windows</code> 文件中的第一行代码中的<code>D:/Git</code>为自己本机电脑的 <code>Git</code> 安装目录，即第一行代码为声明 <code>sh.exe</code> 的目录<br>  2.1.2 执行 <code>gradle installGitHooks</code></p>
 <p>Mac OS/Linux:  <code>./gradlew installGitHooks</code><br></p>
 <p>或者在 <code>Android Studio</code> 中右边面板上找到 <code>root-Tasks-other-installGitHooks</code> 并双击执行</p>
-<p>2.2 赋予执行脚本可执行权限 <code>chmod +x .git/hooks/post-commit</code><br></p>
+<p>2.2 赋予执行脚本可执行权限 <code>chmod +x .git/hooks/pre-commit</code><br></p>
 <h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>使用<strong>git提交增量检查</strong>时需要配置ANDROID_HOME环境变量(需要以ANDROID_HOME命名并加入到path中，因为在Lint框架中执行Lint检查时需要获取Android环境变量)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Windows环境：在电脑-&gt;属性-&gt;环境变量中编辑即可</div></pre></td></tr></table></figure>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Mac OS/Linux环境：编辑 ~/.bashrc即可</div><div class="line">vi ~./bashrc</div><div class="line"><span class="built_in">export</span> ANDROID_HOME=<span class="variable">$HOME</span>/&#123;Android SDK 路径&#125;</div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$ANDROID_HOME</span>/tools</div></pre></td></tr></table></figure>
@@ -59,10 +59,10 @@
 <h3 id="COMMIT-HOOKS"><a href="#COMMIT-HOOKS" class="headerlink" title="COMMIT HOOKS"></a>COMMIT HOOKS</h3><blockquote>
 <p>为了强制进行一些编码规范等的执行，会在 git hooks 在进行 commit 后做检查，如果检测不通过，则会触发 git reset 进行回滚此次提交，并将错误提示日志打印到 <code>lint-check-result.log</code> 文件中</p>
 </blockquote>
-<h4 id="大概原理"><a href="#大概原理" class="headerlink" title="大概原理"></a>大概原理</h4><p>i. 在项目中应用 gradle plugin，在每次 git commit 后，在 <code>.git/hooks</code> 中的 <code>post-commit</code> hook 会自动执行，会到项目根目录下执行 <code>./gradlew lintCheck -PisLintCheck</code></p>
-<p>ii. lintCheck 会通过 <code>git diff</code> 获取本次提交和上一次提交之间的代码差异，并记录其行数和文件名</p>
+<h4 id="大概原理"><a href="#大概原理" class="headerlink" title="大概原理"></a>大概原理</h4><p>i. 在项目中应用 gradle plugin，在每次 git commit 后，在 <code>.git/hooks</code> 中的 <code>pre-commit</code> hook 会自动执行，会到项目根目录下执行 <code>./gradlew lintCheck -PisLintCheck</code></p>
+<p>ii. lintCheck 会通过 <code>git diff</code> 获取暂存区中的代码修改，并记录其行数和文件名</p>
 <p>iii. 将所有的改动的文件进行 lint 操作，并记录其 issue，如果某个 issue 对应的代码行正好是改动的代码行，则将记录数(记为 K)加一</p>
-<p>iiii. 当结束 lintCheck 后，如果 K &gt; 0 ，则将代码回滚(<code>git reset HEAD~1</code>)，即将该 commit 撤销</p>
+<p>iiii. 当结束 lintCheck 后，如果 K &gt; 0 ，则抛出异常，使本次提交失败</p>
 <p>PS. 如果该 <code>Issue</code> 是 <code>Warning</code> 级别的，Android Studio 不会进行提示，如果该 <code>Issue</code> 是 <code>Error</code> 级别的，Android Studio 会有错误提示弹窗</p>
 <h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><ol>
 <li><p>在项目根目录下的 <code>build.gradle</code> 中应用插件 </p>
@@ -73,7 +73,7 @@
 <p> eg.</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">lintConfig &#123;</div><div class="line">    //配置Lint检查文件的类型</div><div class="line">    lintCheckFileType = &quot;.java,.xml,.kt&quot;</div><div class="line">    //是否将检查文件的所有扫描结果都输出</div><div class="line">    lintReportAll = true</div><div class="line">    //是否进行 lint 检查，默认为 true</div><div class="line">    isOpenLint = false</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
-<li><p>复制 <code>post-commit</code> 脚本到本地的 <code>.git/hooks</code> 目录下</p>
+<li><p>复制 <code>pre-commit</code> 脚本到本地的 <code>.git/hooks</code> 目录下</p>
 <p> 在根目录下执行执行  </p>
 <blockquote>
 <p>Mac/Linux: <code>./gradlew installGitHooks</code><br><br>Windows: <code>gradle installGitHooks</code></p>
@@ -81,10 +81,12 @@
 <p> 或者在 <code>Android Studio</code> 中右边面板上找到 <code>root-Tasks-other-installGitHooks</code> 并双击执行</p>
 </li>
 </ol>
-<p>PS. 如果无法执行 <code>post-commit</code> 脚本，可能是权限问题，给该脚本加上可执行权限</p>
-<p><code>chmod +x .git/hooks/post-commit</code></p>
-<p>PSS. 如果要强制关闭在 commit 之后的 hook 操作，可以使用 <code>deleteGitHooks</code> task 将 <code>.git/hooks/post-commit</code> 文件删除</p>
-<h3 id="遇到的一些坑和解决方案"><a href="#遇到的一些坑和解决方案" class="headerlink" title="遇到的一些坑和解决方案"></a>遇到的一些坑和解决方案</h3><p><strong><em>坑 1：</em></strong> 由于 lint 的 api 依赖于 kotlin-compiler ，而这会造成 Android Studio 的 Kotlin-Plugin 冲突，而导致无法编译</p>
+<p>PS. 如果无法执行 <code>pre-commit</code> 脚本，可能是权限问题，给该脚本加上可执行权限</p>
+<p><code>chmod +x .git/hooks/pre-commit</code></p>
+<p>PSS. 强制关闭 hook 操作</p>
+<pre><code>* 如果要强制关闭在 commit 之后的 hook 操作，可以使用 `deleteGitHooks` task 将 `.git/hooks/pre-commit` 文件删除
+* 或者在 commit 时候加上 ` --no-verify` 参数
+</code></pre><h3 id="遇到的一些坑和解决方案"><a href="#遇到的一些坑和解决方案" class="headerlink" title="遇到的一些坑和解决方案"></a>遇到的一些坑和解决方案</h3><p><strong><em>坑 1：</em></strong> 由于 lint 的 api 依赖于 kotlin-compiler ，而这会造成 Android Studio 的 Kotlin-Plugin 冲突，而导致无法编译</p>
 <p><strong>错误提示：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">FAILURE: Build failed with an exception.</div><div class="line"></div><div class="line">* What went wrong:</div><div class="line">org.jetbrains.kotlin.cli.common.arguments.K2JVMCompilerArguments.setAllowNoSourceFiles(Z)V</div><div class="line"></div><div class="line">* Try:</div><div class="line">Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.</div><div class="line"></div><div class="line">* Get more help at https://help.gradle.org</div><div class="line"></div><div class="line">Deprecated Gradle features were used in this build, making it incompatible with Gradle 6.0.</div><div class="line">Use &apos;--warning-mode all&apos; to show the individual deprecation warnings.</div><div class="line">See https://docs.gradle.org/5.4.1/userguide/command_line_interface.html#sec:command_line_warnings</div><div class="line"></div><div class="line">BUILD FAILED in 20s</div></pre></td></tr></table></figure></p>
 <p><strong>解决方法：</strong></p>
 <p>在 buildSrc/build.gradle 文件中控制 lint api 的依赖</p>
