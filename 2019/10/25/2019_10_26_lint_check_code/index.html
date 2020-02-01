@@ -83,10 +83,12 @@
 </ol>
 <p>PS. 如果无法执行 <code>pre-commit</code> 脚本，可能是权限问题，给该脚本加上可执行权限</p>
 <p><code>chmod +x .git/hooks/pre-commit</code></p>
-<p>PSS. 强制关闭 hook 操作</p>
-<pre><code>* 如果要强制关闭在 commit 之后的 hook 操作，可以使用 `deleteGitHooks` task 将 `.git/hooks/pre-commit` 文件删除
-* 或者在 commit 时候加上 ` --no-verify` 参数
-</code></pre><h3 id="遇到的一些坑和解决方案"><a href="#遇到的一些坑和解决方案" class="headerlink" title="遇到的一些坑和解决方案"></a>遇到的一些坑和解决方案</h3><p><strong><em>坑 1：</em></strong> 由于 lint 的 api 依赖于 kotlin-compiler ，而这会造成 Android Studio 的 Kotlin-Plugin 冲突，而导致无法编译</p>
+<p>PSS. <strong>强制关闭 hook 操作</strong></p>
+<ul>
+<li>如果要强制关闭在 commit 之后的 hook 操作，可以使用 <code>deleteGitHooks</code> task 将 <code>.git/hooks/pre-commit</code> 文件删除</li>
+<li>或者在 commit 时候加上 <code>--no-verify</code> 参数</li>
+</ul>
+<h3 id="遇到的一些坑和解决方案"><a href="#遇到的一些坑和解决方案" class="headerlink" title="遇到的一些坑和解决方案"></a>遇到的一些坑和解决方案</h3><p><strong><em>坑 1：</em></strong> 由于 lint 的 api 依赖于 kotlin-compiler ，而这会造成 Android Studio 的 Kotlin-Plugin 冲突，而导致无法编译</p>
 <p><strong>错误提示：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">FAILURE: Build failed with an exception.</div><div class="line"></div><div class="line">* What went wrong:</div><div class="line">org.jetbrains.kotlin.cli.common.arguments.K2JVMCompilerArguments.setAllowNoSourceFiles(Z)V</div><div class="line"></div><div class="line">* Try:</div><div class="line">Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.</div><div class="line"></div><div class="line">* Get more help at https://help.gradle.org</div><div class="line"></div><div class="line">Deprecated Gradle features were used in this build, making it incompatible with Gradle 6.0.</div><div class="line">Use &apos;--warning-mode all&apos; to show the individual deprecation warnings.</div><div class="line">See https://docs.gradle.org/5.4.1/userguide/command_line_interface.html#sec:command_line_warnings</div><div class="line"></div><div class="line">BUILD FAILED in 20s</div></pre></td></tr></table></figure></p>
 <p><strong>解决方法：</strong></p>
 <p>在 buildSrc/build.gradle 文件中控制 lint api 的依赖</p>
@@ -114,7 +116,7 @@
 <h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>① ${root} 即项目的根地址文件夹名，请按需修改</p>
 <h3 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h3><p>本文是在巨人的肩膀上进行探索并实践的，感谢 <br><br>①<a href="https://github.com/lsc1993" target="_blank" rel="external">lsc1993</a> 的<a href="https://github.com/lsc1993/AwesomeLint" target="_blank" rel="external">AwesomeLint</a> <br><br>②<a href="https://juejin.im/user/5995c9f2f265da248c3934a5" target="_blank" rel="external">GitCode8</a> 的 <a href="https://juejin.im/post/5d307615f265da1b6b1d0dd9" target="_blank" rel="external">代码洁癖症的我，学习Lint学到心态爆炸</a><br><br>本实践也是在该基础上进行改进并应用到项目中的，代码也是 fork 自该项目。在其基础上进行添加了对 Kotlin 的支持，并在应用到项目中时踩了很多坑也将其填完了。借此也将填坑经验分享出来，以供借鉴<br></p>
 <p><strong>诚惶诚恐，若有错误，不吝赐教</strong></p>
-</div></article></div></main><footer><div class="paginator"><a href="/2019/08/09/record-an-white-screen-accident-for-webview-safe-browse/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ppting';
+</div></article></div></main><footer><div class="paginator"><a href="/2020/02/01/2020_02_01_application_lifecycle/" class="prev">PREV</a><a href="/2019/08/09/record-an-white-screen-accident-for-webview-safe-browse/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ppting';
 var disqus_identifier = '2019/10/25/2019_10_26_lint_check_code/';
 var disqus_title = '使用 Lint 进行代码检查';
 var disqus_url = 'https://ppting.me/2019/10/25/2019_10_26_lint_check_code/';
@@ -122,4 +124,4 @@ var disqus_url = 'https://ppting.me/2019/10/25/2019_10_26_lint_check_code/';
     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();</script><script id="dsq-count-scr" src="//ppting.disqus.com/count.js" async></script><div class="copyright"><p>© 2015 - 2019 <a href="https://ppting.me">PPTing</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-51029889-1",'auto');ga('send','pageview');</script></body></html>
+})();</script><script id="dsq-count-scr" src="//ppting.disqus.com/count.js" async></script><div class="copyright"><p>© 2015 - 2020 <a href="https://ppting.me">PPTing</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-51029889-1",'auto');ga('send','pageview');</script></body></html>
