@@ -13,9 +13,9 @@
 </li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">WebView.setWebContentsDebuggingEnabled(true);</div></pre></td></tr></table></figure>
-<p>将手机连接到电脑，打开 Chrome，输入 <code>chrome://inspect</code> 通过 Chrome DevTools 调试手机上的 WebView 页面<br><img src="https://ws1.sinaimg.cn/large/7bdcf253gy1g5spqh0as4j20l20hs765.jpg" alt="Chrome DevTools"><br>进入 <code>Devices Tab</code>，看到自己的手机设备和当前打开的 HTML5 页面，点击 <code>inspect</code> 打开 DevTools ，此时可以看到有一个提示’安全错误’，并且在刷新重新加载的时候发现页面偶尔会一闪而过一个红色的页面。</p>
+<p>将手机连接到电脑，打开 Chrome，输入 <code>chrome://inspect</code> 通过 Chrome DevTools 调试手机上的 WebView 页面<br><img src="https://i.loli.net/2020/04/12/aGMBfkn7rITUi1W.jpg" alt="Chrome DevTools"><br>进入 <code>Devices Tab</code>，看到自己的手机设备和当前打开的 HTML5 页面，点击 <code>inspect</code> 打开 DevTools ，此时可以看到有一个提示’安全错误’，并且在刷新重新加载的时候发现页面偶尔会一闪而过一个红色的页面。</p>
 <p>一开始不以为然，以为是自己为了解开 HTTPS 而导致的就没放在心上，这时前端的同事让我给他装个可以调试的包给他排查一下问题，我把 apk 文件给到他后，在他的手机上打开 HTML5 的页面是都正常可以访问的。</p>
-<p>这就更让人百思不得其解了。<br><img src="https://ws1.sinaimg.cn/large/7bdcf253gy1g5sprnaibzj20ff0xcmyy.jpg" alt="红屏页面"></p>
+<p>这就更让人百思不得其解了。<br><img src="https://i.loli.net/2020/04/12/yOxHaYCfMDZGLPr.jpg" alt="红屏页面"></p>
 <h2 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h2><p>后来经测试的另一个同事提醒，说会不会是因为什么原因导致访问会提示不安全了</p>
 <p>于是乎上网 Google 了一下 “您要访问的网站包含有害应用” 这个关键字无果，紧接着在其前面加上 WebView，搜出来了一篇 CSDN 上的 Blog，终于找到了问题所在。</p>
 <blockquote>
@@ -46,7 +46,7 @@
 <p><a href="https://developer.android.com/guide/webapps/managing-webview" target="_blank" rel="external">管理 WebView 对象</a></p>
 <p><a href="https://developer.android.com/about/versions/oreo/android-8.1" target="_blank" rel="external">Android 8.1 Features and APIs
 </a></p>
-</div></article></div></main><footer><div class="paginator"><a href="/2019/10/25/2019_10_26_lint_check_code/" class="prev">上一篇</a><a href="/2019/03/13/how_to_used_charles/" class="next">下一篇</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ppting';
+</div></article></div></main><footer><div class="paginator"><a href="/2019/10/25/2019_10_26_lint_check_code/" class="prev">PREV</a><a href="/2019/03/13/how_to_used_charles/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ppting';
 var disqus_identifier = '2019/08/09/record-an-white-screen-accident-for-webview-safe-browse/';
 var disqus_title = '记录一次 Android 内嵌 WebView 白屏无法加载内容的事故';
 var disqus_url = 'https://ppting.me/2019/08/09/record-an-white-screen-accident-for-webview-safe-browse/';
