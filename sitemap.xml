@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://ppting.me/2014/05/26/2014_05_26_ultimate/</loc>
+    
+    <lastmod>2020-05-02T05:06:30.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://ppting.me/2015/03/19/2015_03_19_zuji_live_as_a_moive/</loc>
+    
+    <lastmod>2020-05-02T05:04:07.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://ppting.me/2017/12/24/2017_12_24_component_for_android/</loc>
+    
+    <lastmod>2020-05-02T05:02:16.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://ppting.me/2019/01/01/preview_recyclerview_in_preview_window/</loc>
+    
+    <lastmod>2020-05-02T05:00:48.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://ppting.me/2018/04/14/2018_04_14_justify-in-android/</loc>
+    
+    <lastmod>2020-05-02T04:57:04.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://ppting.me/2019/03/13/how_to_used_charles/</loc>
     
     <lastmod>2020-05-02T03:30:29.000Z</lastmod>
@@ -72,34 +107,6 @@
   </url>
   
   <url>
-    <loc>https://ppting.me/2019/01/01/preview_recyclerview_in_preview_window/</loc>
-    
-    <lastmod>2019-01-01T08:33:53.779Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://ppting.me/2014/05/26/2014_05_26_ultimate/</loc>
-    
-    <lastmod>2018-08-19T03:26:06.173Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://ppting.me/2018/04/14/2018_04_14_justify-in-android/</loc>
-    
-    <lastmod>2018-04-14T04:07:29.695Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://ppting.me/2017/12/24/2017_12_24_component_for_android/</loc>
-    
-    <lastmod>2017-12-24T08:09:30.780Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://ppting.me/2016/10/18/2016_10_18_retrofit_with_okhttp/</loc>
     
     <lastmod>2017-12-06T03:06:16.451Z</lastmod>
@@ -152,13 +159,6 @@
     <loc>https://ppting.me/2015/01/25/2015_01_25_sitemap/</loc>
     
     <lastmod>2017-01-07T13:31:15.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://ppting.me/2015/02/12/2015_02_12_shadowsocks/</loc>
-    
-    <lastmod>2017-01-07T13:26:18.000Z</lastmod>
     
   </url>
   
@@ -255,13 +255,6 @@
   
   <url>
     <loc>https://ppting.me/2015/03/08/2015_03_08_use_git_tips/</loc>
-    
-    <lastmod>2017-01-07T11:55:09.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://ppting.me/2015/03/19/2015_03_19_zuji_live_as_a_moive/</loc>
     
     <lastmod>2017-01-07T11:55:09.000Z</lastmod>
     
