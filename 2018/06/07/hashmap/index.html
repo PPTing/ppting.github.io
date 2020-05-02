@@ -9,16 +9,16 @@
 <li>位或 <code>|</code></li>
 </ul>
 <blockquote>
-<p>0 &amp; 0 = 0 ，其余都是 1</p>
+<p>0 | 0 = 0 ，其余都是 1</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sample : </div><div class="line">0011</div><div class="line">1010</div><div class="line">1011</div><div class="line">即 `3 &amp; 10 = 11`</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sample : </div><div class="line">0011</div><div class="line">1010</div><div class="line">1011</div><div class="line">即 `3 | 10 = 11`</div></pre></td></tr></table></figure>
 <ul>
 <li>位异或 <code>^</code></li>
 </ul>
 <blockquote>
 <p>相同为 0， 不同为1</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sample : </div><div class="line">*0011</div><div class="line">1010</div><div class="line">1001</div><div class="line">即 `3 &amp; 10 = 9`</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sample : </div><div class="line">0011</div><div class="line">1010</div><div class="line">1001</div><div class="line">即 `3 ^ 10 = 9`</div></pre></td></tr></table></figure>
 <ul>
 <li>非 <code>~</code></li>
 </ul>
@@ -28,7 +28,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sample : </div><div class="line">0011</div><div class="line">1100</div><div class="line">即 `~3 = -4`</div></pre></td></tr></table></figure>
 <p><strong>Tips</strong></p>
 <blockquote>
-<p><code>&amp;</code> 是都得为1才能得到1 ，<code>|</code> 是只要有1就为1，<code>^</code> 是相同则为 1。</p>
+<p><code>&amp;</code> 是都得为1才能得到1 ，<code>|</code> 是只要有1就为1，<code>^</code> 是相同则为 0，不同则为 1。</p>
 </blockquote>
 <ul>
 <li>原码<br>第一位是符号位，<code>1</code> 是负数，<code>0</code>是正数</li>
@@ -249,7 +249,7 @@
 <li>结束循环<br>loHead = A -&gt; B -&gt; C</li>
 </ul>
 <p><strong>通过上面的分析也可以看出，Java 8 在扩容过程中，链表的顺序是不变的，链表在扩容后还保持原来的顺序，而 Java 7 是倒序的</strong></p>
-</div></article></div></main><footer><div class="paginator"><a href="/2019/01/01/preview_recyclerview_in_preview_window/" class="prev">PREV</a><a href="/2018/04/14/2018_04_14_justify-in-android/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ppting';
+</div></article></div></main><footer><div class="paginator"><a href="/2019/01/01/preview_recyclerview_in_preview_window/" class="prev">上一篇</a><a href="/2018/04/14/2018_04_14_justify-in-android/" class="next">下一篇</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ppting';
 var disqus_identifier = '2018/06/07/hashmap/';
 var disqus_title = 'HashMap 源码阅读笔记';
 var disqus_url = 'https://ppting.me/2018/06/07/hashmap/';
