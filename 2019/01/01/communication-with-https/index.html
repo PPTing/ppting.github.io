@@ -16,9 +16,7 @@
 <p>要得到一份数字证书，需要由服务器端的(或者说是信息的发送方)到数字证书认证机构去申请，而 CA 确认该身份后通过申请，则会给该申请者一个包含经过 CA 签名的公钥的数字证书。</p>
 <p>在发送数据的时候，会将数字证书也带上，数字证书中包含了该服务端(信息发送方)的公钥，以及其他信息，接收方在拿到数字证书时，先通过证书的签发方看该证书是否有效可信任，接下来就拿其证书机构的公钥(2)做数字签名验证，验证通过则可以证明该证书公钥(1)是正确的。<br>这样就达到了公钥交换的正确性保障</p>
 <p><img src="https://ws1.sinaimg.cn/large/0071ouepgy1fyr6yhh3llj30ju0potaw.jpg"></p>
-<h2 id="TLS-四次握手"><a href="#TLS-四次握手" class="headerlink" title="TLS 四次握手"></a>TLS 四次握手</h2><p>通过 WireShark 对 HTTPS 请求进行抓包，可以看到一次完整的 TLS 握手过程</p>
-<p><img src="https://i.loli.net/2020/07/12/k6DKpY1M2nzqI3J.jpg" alt="Xnip2020-07-12_21-05-46.jpg"></p>
-<h3 id="Client-Hello"><a href="#Client-Hello" class="headerlink" title="Client Hello"></a>Client Hello</h3><blockquote>
+<h2 id="TLS-四次握手"><a href="#TLS-四次握手" class="headerlink" title="TLS 四次握手"></a>TLS 四次握手</h2><h3 id="Client-Hello"><a href="#Client-Hello" class="headerlink" title="Client Hello"></a>Client Hello</h3><blockquote>
 <p>客户端向服务端发送</p>
 </blockquote>
 <ul>
@@ -68,7 +66,7 @@
 
 
 
-</div></article></div></main><footer><div class="paginator"><a href="/2019/03/13/how_to_used_charles/" class="prev">上一篇</a><a href="/2019/01/01/preview_recyclerview_in_preview_window/" class="next">下一篇</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ppting';
+</div></article></div></main><footer><div class="paginator"><a href="/2019/03/13/how_to_used_charles/" class="prev">PREV</a><a href="/2019/01/01/preview_recyclerview_in_preview_window/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ppting';
 var disqus_identifier = '2019/01/01/communication-with-https/';
 var disqus_title = 'HTTPS 是如何保证安全的';
 var disqus_url = 'https://ppting.me/2019/01/01/communication-with-https/';
