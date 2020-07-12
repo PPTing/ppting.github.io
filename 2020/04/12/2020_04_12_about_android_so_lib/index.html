@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 那些和 so 库有关的问题 · PPTing's Blog</title><meta name="description" content="那些和 so 库有关的问题 - PPTing"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://ppting.me/atom.xml" title="PPTing's Blog"><meta name="generator" content="Hexo 4.2.1"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/PPTingKJ" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/PPTing" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">那些和 so 库有关的问题</h1><div class="post-info">2020年4月12日</div><div class="post-content"><p>旧文新发，看了自己的笔记应用，这是 18 年写的了，感觉应该还挺有用，分享一下吧</p>
+<a id="more"></a>
+
+<h2 id="ABI"><a href="#ABI" class="headerlink" title="ABI"></a>ABI</h2><blockquote>
+<p>不同 Android 手机使用不同的 CPU，因此支持不同的指令集。CPU 与指令集的每种组合都有其自己的应用二进制界面（或 ABI）。 ABI 可以非常精确地定义应用的机器代码在运行时如何与系统交互。 您必须为应用要使用的每个 CPU 架构指定 ABI。</p>
+</blockquote>
+<p>Android 上支持的 ABI</p>
+<p><img src="https://i.loli.net/2020/04/12/e73kWqZw5zfPFsJ.jpg"></p>
+<h2 id="存放位置"><a href="#存放位置" class="headerlink" title="存放位置"></a>存放位置</h2><p>在 <code>Android Studio</code> 中，应该将 <code>so</code> 文件按照 <code>ABI</code> 分类并放置在 <code>jniLibs</code> 文件夹下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">├── jniLibs</span><br><span class="line">│   ├── armeabi-v7a</span><br><span class="line">│   │   └── libjcore110.so</span><br><span class="line">│   └── x86</span><br><span class="line">│       └── libjcore110.so</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看-Android-设备支持的-ABI-类型"><a href="#查看-Android-设备支持的-ABI-类型" class="headerlink" title="查看 Android 设备支持的 ABI 类型"></a>查看 Android 设备支持的 ABI 类型</h2><p>一般来说，设备 ABI 都是固定的，这是系统在编译时决定的，在 <code>/system/build.prop</code> 指定了设备的 ABI 类型</p>
+<blockquote>
+<p>primary ABI（主ABI）：对应当前系统中使用的机器码类型<br>secondary ABI（副ABI）：表示当前系统支持的其他ABI类型</p>
+</blockquote>
+<p>比如 Nexus 5 的 <code>build.prop</code> 文件中是这样的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ro.product.cpu.abi&#x3D;armeabi-v7a</span><br><span class="line">ro.product.cpu.abi2&#x3D;armeabi</span><br><span class="line">ro.product.cpu.abilist&#x3D;armeabi-v7a,armeabi</span><br><span class="line">ro.product.cpu.abilist32&#x3D;armeabi-v7a,armeabi</span><br><span class="line">ro.product.cpu.abilist64&#x3D;</span><br></pre></td></tr></table></figure>
+<p>可以使用 adb 命令查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell</span><br><span class="line">getprop | grep abilist</span><br></pre></td></tr></table></figure>
+
+<p>可以查看当前设备支持的 ABI 类型。<br>例如 Nexus 5 所支持的 ABI 类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[ro.product.cpu.abilist]: [armeabi-v7a,armeabi]</span><br><span class="line">[ro.product.cpu.abilist32]: [armeabi-v7a,armeabi]</span><br><span class="line">[ro.product.cpu.abilist64]: []</span><br></pre></td></tr></table></figure>
+
+<p>或者在 <code>Java</code> 代码中，使用下面的代码获取</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Build.CPU_ABI&#x2F;&#x2F;String 类型 primary ABI</span><br><span class="line">Build.CPU_ABI2&#x2F;&#x2F;String 类型 secondary ABI</span><br><span class="line">Build.SUPPORTED_ABIS&#x2F;&#x2F;String[] 类型 支持的 ABI 列表</span><br></pre></td></tr></table></figure>
+
+<p>可以看到该设备(Nexus 5)的主 ABI 是 armeabi-v7a，副 ABI 是 armeabi</p>
+<h2 id="apk-安装过程"><a href="#apk-安装过程" class="headerlink" title="apk 安装过程"></a>apk 安装过程</h2><p>apk 在安装的时候，Package Manager 会扫描 apk 文件，寻找符合条件的 so 库。<br>现根据当前设备的 primary-abi 值，寻找对应的 so 文件，当不存在 primary 的 so 库时，会寻找 secondary 的 so 库。</p>
+<blockquote>
+<p>即 lib/{primary-abi}/libName.so<br>或者 lib/{secondary-abi}/libName.so</p>
+</blockquote>
+<p>即当安装应用时，系统会根据当前设备的 CPU 架构寻找最优的 ABI 适配，如果找到合适的 so 文件，则会将整个 abi 文件夹下的 so 文件复制到 <code>/data/data/{package.name}/lib</code> 目录下。</p>
+<blockquote>
+<p>注意：apk安装过程对so选择是基于整个ABI文件夹的，而非以单个so文件为粒度，也就是说把lib/armeabi 、lib/armeabi-v7a、lib/x86等等文件夹的其中一个文件夹内所有.so复制到应用的data目录下。</p>
+</blockquote>
+<h2 id="经验"><a href="#经验" class="headerlink" title="经验"></a>经验</h2><p>在我的一个 app 中，由于使用了某个第三方的 SDK ，这个第三方 SDK 只提供了 armeabi-v7a 的 so 库，并且我在这个项目中还引用了 React Native ，React Native 中包含了 x86 和 armeabi-v7a 的 so 库。<br>所以当我在 Pad 上安装完后，打开应用后就奔溃了，奔溃日志如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.facebook.soloader.SoLoader$WrongAbiError: APK was built for a different platform</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>Native Libs Monitor</code> 这个软件查看该 app 安装的 so 库时发现，该 app 使用的全是 <code>armeabi-v7a</code> 的 so 文件，所以导致了Crash。</p>
+<p><strong><em>解决方案</em></strong></p>
+<ul>
+<li>方案一：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">补齐 x86 下的 so 文件</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>方案二：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将第三方 SDK 提供的 so 文件复制一份到 x86 文件夹下，并在使用到这个 SDK 的功能时进行判断当前设备的 ABI ，如果是 x86 则提示用户该功能不可用。</span><br></pre></td></tr></table></figure>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="ndkFilter"><a href="#ndkFilter" class="headerlink" title="ndkFilter"></a>ndkFilter</h3><p>在 <code>build.gradle</code> 中设置 ndkFilter</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">defaultConfig&#123;</span><br><span class="line">    ndk &#123;</span><br><span class="line">         abiFilters &quot;armeabi-v7a&quot;,&quot;x86&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样的配置会使得打包后的 apk 文件中只保留 <code>armeabi-v7a</code> 和 <code>x86</code> 的文件夹。</p>
+<h3 id="splits"><a href="#splits" class="headerlink" title="splits"></a>splits</h3><p>可以通过 splits 生成指定的apk文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">splits &#123;</span><br><span class="line">    abi &#123;</span><br><span class="line">        enable true</span><br><span class="line">        reset()</span><br><span class="line">        include &#39;x86&#39;, &#39;armeabi&#39;, &#39;armeabi-v7a&#39;, &#39;mips&#39; &#x2F;&#x2F;选择需要为 apk 编译的 ndk abi</span><br><span class="line">        universalApk false &#x2F;&#x2F;是否打包一个包含所有 abi 的 apk 包</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a href="http://allenfeng.com/2016/11/06/what-you-should-know-about-android-abi-and-so/" target="_blank" rel="noopener">谈谈 Android 的 so</a></p>
+</div></article></div></main><footer><div class="paginator"><a href="/2020/04/12/2020_04_12_about_android_file_path/" class="prev">上一篇</a><a href="/2020/02/01/2020_02_01_application_lifecycle/" class="next">下一篇</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ppting';
+var disqus_identifier = '2020/04/12/2020_04_12_about_android_so_lib/';
+var disqus_title = '那些和 so 库有关的问题';
+var disqus_url = 'https://ppting.me/2020/04/12/2020_04_12_about_android_so_lib/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//ppting.disqus.com/count.js" async></script><div class="copyright"><p>© 2015 - 2020 <a href="https://ppting.me">PPTing</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-51029889-1",'auto');ga('send','pageview');</script></body></html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 暑假充电之————HTML5 NO.1 · PPTing's Blog</title><meta name="description" content="暑假充电之————HTML5 NO.1 - PPTing"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://ppting.me/atom.xml" title="PPTing's Blog"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/PPTingKJ" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/PPTing" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">暑假充电之————HTML5 NO.1</h1><div class="post-info">2014年7月7日</div><div class="post-content"><p>###暑假充电之——HTML5学习笔记NO.1<br>今天下午在<a href="http://www.imooc.com/learn/9" target="_blank" rel="noopener">慕课网</a>上学习了HTML5的第一二两章，都是一些很基本的标签知识，下面做下笔记，以便以后复习。<br></p>
+<ol>
+<li>首先知道了HTML5的语法编写风格和之前的都变得不一样了，变得简单易懂容易记忆。<br><br>变化：<br><blockquote>doctype</blockquote>
+从`<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN""http:www.w3c.org/TR/xhtml1/DTD/xhtml1-strict.dtd">`变成了`<!DOCTYPE html>`
+<blockquote>字符编码</blockquote>
+从`<meta http-equiv="Content=Type" Content="text/html;chatset=utf-8">`变成了`<meta chatset="utf-8">`<br>
+从以上可以看出HTML5的语法风格变得更加简洁，例外，HTML5可以全部使用**大写**，可以**不使用引号**，可以**忽略闭合斜杠**，也可以**混合使用**，但是为了编码的规范和代码的易懂性，还是最好不要这么做。<br>
+<a id="more"></a></li>
+<li>HTML5文件基本结构</li>
+</ol>
+<pre><code>&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;网页的标题信息&lt;/title&gt;
+        &lt;script&gt;暂时还不懂，以后补充&lt;/script&gt;
+        &lt;link&gt;暂时还不懂，以后补充
+        &lt;style&gt;暂时还不懂，以后补充&lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;段落&lt;/p&gt;
+        &lt;hx&gt;标题文本&lt;/hx&gt;//x从1~6代表标题从最重要到次要
+        &lt;strong&gt;加粗文字&lt;/strong&gt;
+        &lt;em&gt;斜体文字&lt;/em&gt;
+        &lt;span&gt;//无语义，为了设置单独的样式（比如颜色等），表示强调
+        &lt;q&gt;引用文本&lt;/q&gt;//无语义，表现为双引号，一般为短引用
+        &lt;blockquete&gt;引用文本&lt;/blockquete&gt;//长引用，表现为缩进
+        &lt;br&gt;换行//表现为回车换行，和&lt;img&gt;一样无内容
+        &amp;nbsp；//表现为空格
+        &lt;!--注释文本&gt;&lt;!--&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>以上是今天的学习内容，总结几点：<br></p>
+<ol>
+<li>在学习过程中发现有些标签和Markdown是差不多的，因为之前写过Blog所以上手起来比较容易；</li>
+<li>Markdown是兼容HTML的，所以以上说法就能说得通了。</li>
+</ol>
+<hr>
+<p>下面进行一点实践：<br><br>源代码如下：</p>
+<pre><code>&lt;!DOCTYPE HTML&gt;
+    &lt;html&gt;
+        &lt;head&gt;
+            &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+            &lt;title&gt;Hello HTML5&lt;/title&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+            &lt;h1&gt;欢迎来到HTML5的世界标题1&lt;/h1&gt;
+            &lt;h2&gt;欢迎来到HTML5的世界标题2&lt;/h2&gt;
+            &lt;h3&gt;欢迎来到HTML5的世界标题3&lt;/h3&gt;
+            &lt;h4&gt;欢迎来到HTML5的世界标题4&lt;/h4&gt;
+            &lt;h5&gt;欢迎来到HTML5的世界标题5&lt;/h5&gt;
+            &lt;h6&gt;欢迎来到HTML5的世界标题6&lt;/h6&gt;
+            &lt;p&gt;这是一个(这里有一个加了&quot;&amp; nbsp&quot;的空格→)&amp;nbsp段落&lt;/p&gt;
+            &lt;p&gt;这是另外一个段落&lt;/p&gt;
+            &lt;!--这是注释&gt;&lt;!--&gt;&lt;br&gt;
+            &lt;span&gt;用蓝色字体表示强调&lt;/span&gt;&lt;br&gt;
+            &lt;style&gt;span{color:blue}&lt;/style&gt;
+            &lt;strong&gt;定义加重语气（会加粗字体）&lt;/strong&gt;&lt;br&gt;
+            &lt;em&gt;斜体&lt;/em&gt;&lt;br&gt;
+            &lt;q&gt;咬定青山不放松&lt;/q&gt;
+            &lt;blockquote&gt;咬定青山不放松，&lt;br&gt;立根原在破岩中，&lt;br&gt;千磨万击还坚劲，&lt;br&gt;任尔东西南北风&lt;/blockquote&gt;
+            &lt;img&gt;
+        &lt;/body&gt;
+    &lt;/html&gt;</code></pre>
+<p>以下是在markdown的显示效果，因为Markdown支持HTML，所以显示基本效果相同：<br><br><!DOCTYPE HTML></p>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Hello HTML5</title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+<h1>欢迎来到HTML5的世界标题1</h1>
+<h2>欢迎来到HTML5的世界标题2</h2>
+<h3>欢迎来到HTML5的世界标题3</h3>
+<h4>欢迎来到HTML5的世界标题4</h4>
+<h5>欢迎来到HTML5的世界标题5</h5>
+<h6>欢迎来到HTML5的世界标题6</h6>
+<p>这是一个(这里有一个加了"& nbsp"的空格→)&nbsp段落</p>
+<p>这是另外一个段落</p>
+<!--这是注释><!--><br>
+<span>用蓝色字体表示强调</span><br>
+<style>span{color:blue}</style>
+<strong>加粗字体</strong><br>
+<em>斜体</em><br>
+<q>咬定青山不放松</q>
+<blockquote>咬定青山不放松，<br>立根原在破岩中，<br>千磨万击还坚劲，<br>任尔东西南北风</blockquote>
+<img>
+</body>
+</html><br>
+在Chrome浏览器中显示效果如下：
+![Chrome显示效果](https://ooo.0o0.ooo/2017/01/07/5870e7b76d7a2.jpg)</div></article></div></main><footer><div class="paginator"><a href="/2014/07/08/2014_07_08_learn_html5_no2/" class="prev">上一篇</a><a href="/2014/05/26/2014_05_26_ultimate/" class="next">下一篇</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ppting';
+var disqus_identifier = '2014/07/07/2014_07_07_learn_html5_no1/';
+var disqus_title = '暑假充电之————HTML5 NO.1';
+var disqus_url = 'https://ppting.me/2014/07/07/2014_07_07_learn_html5_no1/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//ppting.disqus.com/count.js" async></script><div class="copyright"><p>© 2015 - 2020 <a href="https://ppting.me">PPTing</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-51029889-1",'auto');ga('send','pageview');</script></body></html>
