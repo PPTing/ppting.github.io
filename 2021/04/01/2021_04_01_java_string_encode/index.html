@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Java 字符串编码 · PPTing's Blog</title><meta name="description" content="Java 字符串编码 - PPTing"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://ppting.me/atom.xml" title="PPTing's Blog"><meta name="generator" content="Hexo 4.2.1"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/PPTingKJ" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/PPTing" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Java 字符串编码</h1><div class="post-info">2021年4月1日</div><div class="post-content"><h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><table>
+<thead>
+<tr>
+<th>名词</th>
+<th>单位</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>位</td>
+<td>bit</td>
+<td>计算机中最小的单位 用0/1标识</td>
+</tr>
+<tr>
+<td>字节</td>
+<td>byte</td>
+<td>可表示常用英文字符8位二进制称为一字节，一字节可以存储2^8(=256)种状态</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>在 Java 中， char 占两个字节(2 byte)，即 16 bits</p>
+</blockquote>
+<h2 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h2><p>Unicode 是一个字符集，包含了全世界的几乎所有字符，现有的字符大约有百万多个，详见 <a href="https://home.unicode.org/" target="_blank" rel="noopener">https://home.unicode.org/</a></p>
+<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><p><code>码点(code point)</code>代表 Unicode 字符集中的一个值，代表一个符号</p>
+<p><code>代码单元(code unit)</code>代表具体编码形式中的最小单位</p>
+<p>在 Java 中，使用 <code>UTF-16</code> 作为内存中字符存储格式，即 16位，两个字节，只能存储 <code>2^16 - 1 = 65535</code> 个字符。 <code>UTF-16</code> 编码的规则很简单：基本平面的字符占用2个字节，辅助平面的字节占4个字节</p>
+<p>则其 <code>代码单元(code unit)</code> 就是一个字节，在 Java 中，一个<code>码点(code point)</code>可能由两个<code>代码单元(code unit)</code>或者四个<code>代码单元(code unit)</code>组成</p>
+<p>例如<code>中</code>字的码点为 <code>U+4E2D</code>，UTF-16 的编码为 <code>\u4e2d</code>，占用两个<code>代码单元(code unit)</code>，一共占用两个字节(1个 char)</p>
+<p>但是，在 Unicode 字符集已经远远超过 65535 个字符了，难道 Java 中不能表示 Unicode 中超过 65535 的字符了吗，当然不是</p>
+<p>在 Java 中，char 为两个字节，即16位；在代码中可以使用 <code>\uxxxx</code> 表示某个字符，但是只能表示 0x0000~0xFFFF 之间的字符，如果需要表示超过 0xFFFF以后的字符，则需要用两个 char 来表示，例如 <code>💢  U+1F4A2</code> 则使用 <code>\uD83D\uDCA2</code> 表示</p>
+<p>很显然，这个 <code>U+1F4A2</code> 已经超过了基本面的范围<code>0x0000-0xFFFF</code> </p>
+<p>这个<code>\uD83D\uDCA2</code>是如何计算出来的呢</p>
+<p>在 <code>UTF-16</code> 编码中，基本面的字符使用两个字节表示，如上的<code>中</code>，辅助平面的字符使用四个字节表示。</p>
+<p>也就是说在 <code>UTF-16</code> 中，一个字符要么为两个字节(<strong>位于[U+0000,U+FFFF]间</strong>)，要么为四个字节(<strong>位于[U+010000,U+10FFFF]间</strong>)</p>
+<p><strong><em>那么问题来了，当遇到两个字节时，是把它当做单独的字符，还是与后面的两个字节一起当成一个四字节的字符呢？</em></strong></p>
+<p>在 UTF-16 中，辅助平面的字符使用 20个 bit 进行表示，分为两部分，高10位和低10位</p>
+<p>0000000000 0000000000</p>
+<p>UTF-16编码将超过 U+FFFF 的字符，会将其拆成两个字符表示，分别为<code>H(高位 high)</code> 和 <code> L (低位 low)</code><br>并将其映射到 <code>U+D800-U+DBFF</code> 和 <code>U+DC00-U+DFFF</code> 之间（基本平面中[U+D800,U+DFFF] 为空，不对应任何字符）</p>
+<p>即一个四个字节的辅助平面字符会使用两个基本平面的字符来表示</p>
+<p>因此，当遇到一个字符的码点超过 U+FFFF 时候，例如 <code>💢  U+1F4A2</code> 已经超过了 U+FFFF，则在 UTF-16 中使用四个字节表示，则需要进行计算出低位和高位的数值</p>
+<p>先计算高位。<br>减去超过的部分，得到数值 A<br>A = 0x1F4A2 - 0x10000 = 0xF4A2 , 即 <code>1 11101 00101 00010</code></p>
+<p>将 A 补齐到20位二进制，得到 <code>00001 11101 00101 00010</code><br>将前十位映射到 <code>U+D800-U+DBFF</code>之间，后十位映射到 <code>U+DC00-U+DFFF</code> 之间</p>
+<p>0xD800 的二进制为 110110 00000 00000<br>0xDC00 的二进制为 110111 00000 00000</p>
+<p>高位：将前十位和 0xD800 相加，得到 <code>1101100000111101</code> 即 <code>0xD83D</code><br>低位：将后十位和 0xDC00 相加，得到 <code>1101110010100010</code> 即 <code>0xDCA2</code></p>
+<p>则得到 <code>💢  U+1F4A2</code> 的 UTF-16 的编码为 <code>\uDB3D\uDCA2</code></p>
+<p>具体的辅助平面字符的转换算法如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">H &#x3D; (C - 0x10000) &#x2F; 0x400 + 0xD800</span><br><span class="line">L &#x3D; (C - 0x10000) % 0x400 + 0xDC00</span><br><span class="line"></span><br><span class="line">PS. 0x400 即 二进制的 1 00000 00000</span><br></pre></td></tr></table></figure>
+
+<p>至此，将一个 Unicode 字符转为 UTF16 的编码的方法已经探究完了，现在反过来看一下在遇到 UTF16 编码时，如何将其转为 Unicode 字符</p>
+<p>还是以<code>💢  U+1F4A2</code>为例，其 UTF-16 编码为 <code>\uDB3D\uDCA2</code>，可见第一个字符 <code>0xDB3D</code> 位于 <code>U+D800-U+DBFF</code>之间 那么可以确定 <code>\uDB3D\uDCA2</code> 是一个占四个字节的字符</p>
+<p>接下来再进行翻译</p>
+<p>将前一个字符减去 0xDB00 ，后一个字符减去 0xDC00</p>
+<p>即<br>0xDB3D - 0xDB00 = 0x003D, 即 00111101<br>0xDCA2 - 0xDC00 = 0x00A2, 即 10100010</p>
+<p>将高位H 和 低位L补齐到10位，即</p>
+<p>0000111101<br>0010100010</p>
+<p>再拼接一起，得到 <code>00001 11101 00101 00010</code>，再加上 0x10000(二进制为10000000000000000)，等于</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">00001 11101 00101 00010</span><br><span class="line">00010 00000 00000 00000</span><br><span class="line">-----------------------</span><br><span class="line">00011 11101 00101 00010</span><br></pre></td></tr></table></figure>
+
+<p>得到 00011111010010100010(即0x1F4A2) 即<code>💢  U+1F4A2</code></p>
+<p>Java 中 String.length 返回的字符串对应的 char 的长度而不是人类认知中字符的长度</p>
+<p>例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;💢&quot;.length() &#x3D;&#x3D; 2</span><br><span class="line">&quot;中文&quot;.length() &#x3D;&#x3D; 2</span><br><span class="line">&quot;中&quot;.length() &#x3D;&#x3D; 1</span><br></pre></td></tr></table></figure>
+<p>0001000010 1110110111</p>
+<p>在 Java 中使用<code>码点(Code Point)</code> 来代表 Unicode 字符集中的每个字符，取值 0x000000<code>(Character.MIN_CODE_POINT)</code>-0x10FFFF<code>(Character.MAX_CODE_POINT)</code></p>
+<p>本文参考 <a href="https://liyucang-git.github.io/2019/06/17/%E5%BD%BB%E5%BA%95%E5%BC%84%E6%87%82Unicode%E7%BC%96%E7%A0%81/" target="_blank" rel="noopener">彻底弄懂Unicode编码</a> 感谢分享</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2021/03/05/measure_view/" class="next">下一篇</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'ppting';
+var disqus_identifier = '2021/04/01/2021_04_01_java_string_encode/';
+var disqus_title = 'Java 字符串编码';
+var disqus_url = 'https://ppting.me/2021/04/01/2021_04_01_java_string_encode/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//ppting.disqus.com/count.js" async></script><div class="copyright"><p>© 2015 - 2021 <a href="https://ppting.me">PPTing</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-51029889-1",'auto');ga('send','pageview');</script></body></html>
