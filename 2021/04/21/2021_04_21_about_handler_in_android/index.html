@@ -59,7 +59,65 @@
 <p>loop() 方法中，获取下一条消息的方法 <code>messageQueue.next()</code> 是阻塞的，所以当 messageQueue 中没有新的消息了，loop() 会阻塞住[见 MessageQueue#next()]，所以不会造成 CPU 的高消耗</p>
 <h2 id="3-Message"><a href="#3-Message" class="headerlink" title="3. Message"></a>3. Message</h2><p>Message 是整个消息分享机制中的「信使」，将信息从 A 带给 B</p>
 <p>Message 类中包含以下一些字段</p>
-<p><a href="https://www.notion.so/7289161884684c59a10b7929a078c427" target="_blank" rel="noopener">Untitled</a></p>
+<table>
+<thead>
+<tr>
+<th>成员变量</th>
+<th>类型</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>what</td>
+<td>Int</td>
+<td>开发者自定义的一个 code 字段，用来标识是什么类型的消息后续进行处理</td>
+</tr>
+<tr>
+<td>arg1</td>
+<td>Int</td>
+<td>arg1 和 arg2 都是用来存储数据的备选方案，如果需要存储的数据不多而不想使用 data 的话，则可以考虑使用该字段</td>
+</tr>
+<tr>
+<td>arg2</td>
+<td>Int</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>data</td>
+<td>Bundle</td>
+<td>用于在 Message 中存储自定义数据</td>
+</tr>
+<tr>
+<td>obj</td>
+<td>Object</td>
+<td>用于发送给接受者的任意对象，注意，如果使用 Messager 在跨进程中的发送数据时，只能发送 framework 中的 Parcelable 对象，且不能为 null，不能发送自定义的 Parcelable 对象，要发送自定义的 Parcelable 对象应该使用 setData 方法</td>
+</tr>
+<tr>
+<td>when</td>
+<td>Long</td>
+<td>Message 的目标发送处理时间，这个时间是基于系统开机时间计算的SystemClock#uptimeMillis</td>
+</tr>
+<tr>
+<td>target</td>
+<td>Handler</td>
+<td>用于处理该消息的 Handler</td>
+</tr>
+<tr>
+<td>callback</td>
+<td>Runable</td>
+<td>Runnable 类型</td>
+</tr>
+<tr>
+<td>next</td>
+<td>Message</td>
+<td>Message 的下一个 Message，可见 Message 是一个单链表的数据结构</td>
+</tr>
+<tr>
+<td>sPool</td>
+<td>Message</td>
+<td>用来做 Message 的缓存池</td>
+</tr>
+</tbody></table>
 <h3 id="3-1-obtain"><a href="#3-1-obtain" class="headerlink" title="3.1 obtain()"></a>3.1 obtain()</h3><blockquote>
 <p>从 Message 缓存池中获取一个 Message 对象</p>
 </blockquote>
