@@ -38,7 +38,7 @@
 
 <p>可见，第一次调用 prepare() 方法时会在当前线程中 new 一个 Looper 对象，并保存在该线程的 mThreadLocal 中</p>
 <p>若在同个线程中多次调用 prepare 方法，则会走到 if 的 case 中抛出异常</p>
-<p>因此保证在同一个线程中只有一个 Looper 对象存在</p>
+<p><strong><em>因此保证在同一个线程中只有一个 Looper 对象存在</em></strong></p>
 <h3 id="2-2-myLooper"><a href="#2-2-myLooper" class="headerlink" title="2.2 myLooper()"></a>2.2 myLooper()</h3><blockquote>
 <p>获取当前线程 looper 的方法</p>
 </blockquote>
