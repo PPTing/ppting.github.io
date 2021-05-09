@@ -66,7 +66,7 @@
 <p>可见，在这里调用了 Application 的 <code>attach(Context context)</code> 方法</p>
 <p>而  <code>Application</code> 这个类中的 <code>attach</code> 方法中调用了 <code>attachBaseContext(Context context)</code> 方法，而这个，就是我们在自定义的 <code>XXApplication</code> 中 Override 的 <code>attachBaseContext(Context context)</code> ，而根据上面的分析，我们知道此时还未给 ②<code>mApplication</code> 赋值，所以我们在 <code>attachBaseContext(Context context)</code> 方法中调用 <code>getApplicaitonContext()</code> 就为 null</p>
 <p>到此，真相大白</p>
-</div></article></div></main><footer><div class="paginator"><a href="/2020/04/12/2020_04_12_about_android_so_lib/" class="prev">PREV</a><a href="/2019/10/25/2019_10_26_lint_check_code/" class="next">NEXT</a></div><div id="disqus_thread"></div>#广告<script data-ad-client="ca-pub-6655519689547755" async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>var disqus_shortname = 'ppting';
+</div></article></div></main><footer><div class="paginator"><a href="/2020/04/12/2020_04_12_about_android_so_lib/" class="prev">上一篇</a><a href="/2019/10/25/2019_10_26_lint_check_code/" class="next">下一篇</a></div><div id="disqus_thread"></div>#广告<script data-ad-client="ca-pub-6655519689547755" async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>var disqus_shortname = 'ppting';
 var disqus_identifier = '2020/02/01/2020_02_01_application_lifecycle/';
 var disqus_title = '从一次渠道包的渠道上报失败查看 ApplicationContext 的赋值过程';
 var disqus_url = 'https://ppting.me/2020/02/01/2020_02_01_application_lifecycle/';
