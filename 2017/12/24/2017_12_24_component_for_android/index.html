@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Android 组件化开发 - PPTing&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="PPTing&#039;s Blog"><meta name="msapplication-TileImage" content="/favicon.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="PPTing&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Android 组件化开发在项目的开发中，业务模块越来越多，代码量越来越多，编译构建的时间也越来越长，尝试将项目进行组件化开发。 所谓组件化，就是将各个业务模块解耦，在开发的时候将每个业务模块当做单独的 application 开发，在开发完毕后打包成 aar 或者以 module 的形式依赖到主 application 中。"><meta property="og:type" content="blog"><meta property="og:title" content="Android 组件化开发"><meta property="og:url" content="https://ppting.me/2017/12/24/2017_12_24_component_for_android/"><meta property="og:site_name" content="PPTing&#039;s Blog"><meta property="og:description" content="Android 组件化开发在项目的开发中，业务模块越来越多，代码量越来越多，编译构建的时间也越来越长，尝试将项目进行组件化开发。 所谓组件化，就是将各个业务模块解耦，在开发的时候将每个业务模块当做单独的 application 开发，在开发完毕后打包成 aar 或者以 module 的形式依赖到主 application 中。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://i.loli.net/2020/05/02/zoR6FVxBKtpYmdw.png"><meta property="article:published_time" content="2017-12-24T08:00:54.000Z"><meta property="article:modified_time" content="2022-02-04T05:39:52.801Z"><meta property="article:author" content="PPTing"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://i.loli.net/2020/05/02/zoR6FVxBKtpYmdw.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://ppting.me/2017/12/24/2017_12_24_component_for_android/"},"headline":"Android 组件化开发","image":["https://i.loli.net/2020/05/02/zoR6FVxBKtpYmdw.png"],"datePublished":"2017-12-24T08:00:54.000Z","dateModified":"2022-02-04T05:39:52.801Z","author":{"@type":"Person","name":"PPTing"},"publisher":{"@type":"Organization","name":"PPTing's Blog","logo":{"@type":"ImageObject","url":"https://ppting.me/favicon.ico"}},"description":"Android 组件化开发在项目的开发中，业务模块越来越多，代码量越来越多，编译构建的时间也越来越长，尝试将项目进行组件化开发。 所谓组件化，就是将各个业务模块解耦，在开发的时候将每个业务模块当做单独的 application 开发，在开发完毕后打包成 aar 或者以 module 的形式依赖到主 application 中。"}</script><link rel="canonical" href="https://ppting.me/2017/12/24/2017_12_24_component_for_android/"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-51029889-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-51029889-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start -->
+        <script>
+            function switchTab(element) {
+                const id = element.parentElement.id;
+                const tabElements = element.parentElement.parentElement.children;
+                const contentElements = element.parentElement.parentElement.parentElement.parentElement.children[1].children;
+                for (let i = 0; i < tabElements.length; i++) {
+                    const $tab = tabElements[i];
+                    const $content = contentElements[i];
+                    if ($tab.id === id) {
+                        $tab.classList.add('is-active');
+                    } else {
+                        $tab.classList.remove('is-active');
+                    }
+                    if ($content.id === id) {
+                        $content.classList.remove('is-hidden');
+                    } else {
+                        $content.classList.add('is-hidden');
+                    }
+                }
+            }
+        </script>
+        <!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="PPTing's Blog" type="application/atom+xml">
+</head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/favicon.ico" alt="PPTing&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/PPTing"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2017-12-24T08:00:54.000Z" title="12/24/2017, 4:00:54 PM">2017-12-24</time>发表</span><span class="level-item"><time dateTime="2022-02-04T05:39:52.801Z" title="2/4/2022, 1:39:52 PM">2022-02-04</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Android/">Android</a></span><span class="level-item">16 分钟读完 (大约2413个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">Android 组件化开发</h1><div class="content"><h1 id="Android-组件化开发"><a href="#Android-组件化开发" class="headerlink" title="Android 组件化开发"></a>Android 组件化开发</h1><p>在项目的开发中，业务模块越来越多，代码量越来越多，编译构建的时间也越来越长，尝试将项目进行组件化开发。</p>
+<p>所谓组件化，就是将各个业务模块解耦，在开发的时候将每个业务模块当做单独的 application 开发，在开发完毕后打包成 aar 或者以 module 的形式依赖到主 application 中。</p>
+<span id="more"></span>
+
+<p>首先，在项目根目录下的<code>gradle.properties</code>文件里设置一个全局变量 <em><strong><code>isDebug</code></strong></em></p>
+<ol>
+<li>为 <em><strong>true</strong></em> ，即<code>debug</code>模式，每个 <code>module</code> 为单个 <code>application</code>，</li>
+<li>为 <em><strong>false</strong></em>，即<code>非debug</code> 模式，将<code>app</code>主模块编译为 app，并将其他 <code>module</code> 依赖进 <code>app</code></li>
+</ol>
+<h2 id="AndroidManifest"><a href="#AndroidManifest" class="headerlink" title="AndroidManifest"></a>AndroidManifest</h2><p>在每个<code>module</code>中的<code>main</code>文件夹下建立两个文件夹，一个是<code>debug</code>，一个是<code>release</code>，<br>用来存放<code>AndroidManifest</code>文件</p>
+<ol>
+<li>在 <em><strong>debug</strong></em> 模式下，每个<code>module</code>都是单独的<code>app</code>，<br>所以在<code>AndroidManifest</code>中需要添加一个<code>activity</code>作为启动<code>activity</code></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity android:name=&quot;.MainActivity&quot;&gt;</span><br><span class="line">    &lt;intent-filter&gt;</span><br><span class="line">        &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;</span><br><span class="line">        &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;</span><br><span class="line">    &lt;/intent-filter&gt;</span><br><span class="line">&lt;/activity&gt;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>在 <em><strong>release</strong></em> 模式下，每个<code>module</code>都是主<code>app</code>的一个依赖，可以不需要启动<code>activity</code><br>如果需要从主<code>app</code>中打开这些<code>activity</code>，可以使用<code>隐式调用</code>或者使用路由表去启动(放在后面再说)</li>
+</ol>
+<h2 id="build-gradle"><a href="#build-gradle" class="headerlink" title="build.gradle"></a>build.gradle</h2><ol>
+<li><p>在主<code>app</code>中，不论在 <em><strong>debug</strong></em> 或者 <em><strong>release</strong></em> 模式下都作为<code>application</code>存在，<br>即</p>
+<blockquote>
+<p>apply plugin: ‘com.android.application’</p>
+</blockquote>
+</li>
+<li><p>在各个<code>module</code>中，在 <em><strong>debug</strong></em> 模式下，作为<code>application</code>，在 <em><strong>release</strong></em> 模式下，作为<code>library</code></p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (isDebug.toBoolean())&#123;</span><br><span class="line">    apply plugin: &#x27;com.android.application&#x27;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    apply plugin: &#x27;com.android.library&#x27;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><span id="problem_of_androidManifest">AndroidManifest合并的问题</span></li>
+</ul>
+<p>在各个<code>module</code>中，利用<code>sourceSets</code>(在<code>android</code>标签下)中设置每个模式中的<code>AndroidManifest</code>文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sourceSets &#123;</span><br><span class="line">    main &#123;</span><br><span class="line">        if (isDebug.toBoolean()) &#123;</span><br><span class="line">            manifest.srcFile &#x27;src/main/debug/AndroidManifest.xml&#x27;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            manifest.srcFile &#x27;src/main/release/AndroidManifest.xml&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Application"><a href="#Application" class="headerlink" title="Application"></a>Application</h2><p>我们知道，一个应用在启动后，系统会为其创建一个<code>applicaiton</code>对象，这个<code>application</code>对象的生命周期就等于整个应用的生命周期，<br>一般我们会在里头定义一个全局的<code>context</code>。<br>但是，如果在组件化开发中，在<code>debug</code>模式下，每个<code>module</code>是作为<code>application</code>存在的，但当我们打包时，即<code>release</code>模式下，<br>每个<code>module</code>是作为<code>library</code>存在的，这时如果使用该<code>module</code>里的<code>getApplicationContext()</code>就会报错，因为<code>release</code>模式下<br>只有一个<code>application</code></p>
+<p>解决方案：</p>
+<p>我们在<a href="#problem_of_androidManifest">AndroidManifest合并的问题</a>中，在<code>sourceSets</code>里指定<code>AndroidManifest</code>的路径，<br>我们也可以指定在<code>release</code>模式下排除掉某些文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sourceSets &#123;</span><br><span class="line">    main &#123;</span><br><span class="line">        if (isDebug.toBoolean()) &#123;</span><br><span class="line">            manifest.srcFile &#x27;src/main/debug/AndroidManifest.xml&#x27;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            manifest.srcFile &#x27;src/main/release/AndroidManifest.xml&#x27;</span><br><span class="line">            java &#123;</span><br><span class="line">                exclude &#x27;debug/**&#x27;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以我们可以在<code>debug</code>文件夹里的<code>AndroidManifest</code>文件可以指定该<code>Application</code>，而在<code>release</code>文件夹下的<code>AndroidManifest</code>中不指定<code>Application</code><br>但是这种方法也有局限，因为这样的话，我们的<code>module</code>里就没法使用全局的<code>context</code>对象了。</p>
+<p>为了解决上面这个问题，我们将 application 定义在最底层的 module 中(取名为 commonSdk)，并在最上层的 app 中的 AndroidManifest 中去使用这个 application ，这样所有的 module 就都可以使用这个 application context 对象了。</p>
+<h2 id="资源文件"><a href="#资源文件" class="headerlink" title="资源文件"></a>资源文件</h2><p>在开发过程中，我们将<code>module</code>作为一个<code>application</code>使用，所以只会使用该<code>module</code>下<code>res</code>下的资源文件，但当在<code>release</code>模式下，<br>会将整个工程作为一个<code>application</code>，因此所有的资源文件都会被合并到一起，如果<code>module</code>里的有资源文件同名，则会被覆盖，因此有可能<br>造成错误</p>
+<p>为了解决这个问题，我们可以在所有的资源文件的名字上加个<code>前缀</code>，用<code>module</code>区分开来，则不会产生上述问题，<br>在<code>gradle</code>中，可以用</p>
+<blockquote>
+<p>resourcePrefix “前缀_”</p>
+</blockquote>
+<p>强制在资源文件名字上加上该前缀，否则会编译不通过，但这个方法不会限定<code>drawable</code>里的资源文件，因此在<code>drawable</code>中的资源文件命名需要在开发过程中加以规范</p>
+<h2 id="依赖版本"><a href="#依赖版本" class="headerlink" title="依赖版本"></a>依赖版本</h2><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><p>在<code>Android</code>开发中，我们会使用很多的依赖库，在非组件化的项目中，我们只需要一股脑将依赖全部写在<code>app</code>的<code>build.gradle</code><br>文件中，这样我们的项目就可以用这些依赖了。</p>
+<p>但是在组件化中，如果我们也按照这种方式，那就有可能造成重复的依赖，如果我们的<code>firstmodule</code>和<code>secondmodule</code>中都需要<code>http</code>请求，则都去依赖某个<code>http</code>请求库，如果是使用<code>compile &#39;libiray_name:version&#39;</code>这种方式去依赖，<code>gradle</code>会自动帮我们选出最新的版本去依赖，如果两个<code>module</code>中使用的是不同版本的依赖，并且某个新版本中删除了一些<code>api</code>，如果依赖了旧版本的<code>module</code>使用了这些在新版本中被删除的<code>api</code>，那就会报错。</p>
+<p>另外，如果我们的<code>module</code>中是使用<code>compile project(&#39;:project&#39;)</code>这样的依赖，<code>gradle</code>不会帮我们去重，最后打包后代码<br>里就会有重复的类。</p>
+<p>那如何去解决这个问题呢？</p>
+<p>在<strong>Application</strong>一节中，我们使用了一个<code>commonsdk</code>的<code>module</code>，用来给上游的<code>module</code>提供<code>application</code>，在这个<code>module</code>中，我们也可以在这个<code>commonsdk</code>的<code>module</code>中添加上游的<code>module</code>所需要的依赖，比如<code>http</code>请求库(<code>Retrofit</code>)，<code>Gson</code>等等，这样在上游的各个<code>module</code>就都能使用这些依赖。而现在我们只需要在<code>commonsdk</code>这个<code>module</code>中去管理我们的依赖，比如添加、删除、升级依赖。这样我们的主<code>app</code>就不需要去重复依赖一些库了，主<code>app</code>只需要依赖<code>commonsdk</code>这个<code>module</code>，而这个<code>module</code>已经提供了需要的依赖。</p>
+<h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><p>如何去管理这些依赖的版本呢，可以在主工程目录下定义变量，进行统一管理<br>在<code>build.gradle</code>中定义一个标签<code>ext</code></p>
+<pre><code>ext&#123;
+    compileSdkVersion =  25
+    buildToolsVersion = &quot;25.0.2&quot;
+    minSdkVersion = 15
+    targetSdkVersion = 25
+    
+    supportLibraryVersion = &quot;25.3.1&quot;
+    espressoCoreVersion = &quot;2.2.2&quot;
+    junitVersion = &quot;4.12&quot;
+    retrofitVersion = &quot;2.2.0&quot;
+    
+&#125;
+</code></pre>
+<p>然后将各个<code>module</code>的<code>build.gradle</code>里的变量都通过<code>rootProject.ext.xxx</code>取值</p>
+<p>如果是<code>dependencies</code>的话，则用<code>$rootProject.version</code>取值</p>
+<p>例如</p>
+<pre><code>dependencies &#123;
+    compile fileTree(include: [&#39;*.jar&#39;], dir: &#39;libs&#39;)
+    androidTestCompile(&quot;com.android.support.test.espresso:espresso-core:$rootProject.espressoCoreVersion&quot;, &#123;
+        exclude group: &#39;com.android.support&#39;, module: &#39;support-annotations&#39;
+    &#125;)
+    compile &quot;com.android.support:appcompat-v7:$rootProject.supportLibraryVersion&quot;
+    testCompile &quot;junit:junit:$rootProject.junitVersion&quot;
+    compile &quot;com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion&quot;
+&#125;
+</code></pre>
+<h3 id="debug-模式下依赖"><a href="#debug-模式下依赖" class="headerlink" title="debug 模式下依赖"></a>debug 模式下依赖</h3><p>按照我们上述的想法去做以后，或许还存在一个问题，就是在<code>debug</code>模式时，我们的各个<code>module</code>是作为<code>application</code>存在的，<br>这个时候如果我们想安装整个项目<code>app</code>，按照我们的这种模式是无法打开我们的各个业务<code>module</code>的，那难道这个问题就没法解决<br>了吗？<br>当然不是。</p>
+<ol>
+<li><p>我们可以修改为<code>release</code>模式，这样就可以将各个<code>module</code>作为<code>library</code>进行依赖，也就可以打开业务模块了<br>看到这里你们可能会说 你再逗我吗 &#x3D; &#x3D; </p>
+</li>
+<li><p>如果我们想在<code>debug</code>模式下也能安装<code>app</code>的话，并且能够打开各个业务<code>module</code>，那可以在<code>app</code>的<code>dependencies</code>中<br>依赖各个<code>module</code>的<code>aar</code>文件，这个<code>aar</code>文件可以在各个<code>module</code>的<code>/build/outputs/aar</code>下找到，可以写<code>脚本</code>或者<br><code>手动</code>将各个<code>module</code>生成的<code>aar</code>复制到<code>app</code>的<code>libs</code>文件夹下，并进行引用。</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">android&#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        flatDir &#123;</span><br><span class="line">            dirs &#x27;libs&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在<code>dependencies</code>进行依赖</p>
+<pre><code>dependencies &#123;
+    if(isDebug.toBoolean())&#123;
+        compile project(&#39;:router&#39;)
+        compile project(&#39;:commonsdk&#39;)
+        compile(name:&#39;firstmodule-release&#39;, ext:&#39;aar&#39;)
+        compile(name:&#39;secondmodule-release&#39;, ext:&#39;aar&#39;)
+    &#125;else &#123;
+        compile project(&#39;:firstmodule&#39;)
+        compile project(&#39;:secondmodule&#39;)
+    &#125;
+&#125;
+</code></pre>
+<p>这样我们就可以在<code>debug</code>模式下也将整个工程运行起来了，当然，这样其实就没有意义了，因为我们组件化的目的就是为了能够<br>将各个业务<code>module</code>作为<code>application</code>运行，而不是运行整个<code>app</code>，以加快我们的编译速度等，而这样的话就失去了不需要<br>全部编译的意义了。</p>
+<h3 id="多-Product-Flavors-模式下的依赖"><a href="#多-Product-Flavors-模式下的依赖" class="headerlink" title="多 Product Flavors 模式下的依赖"></a>多 Product Flavors 模式下的依赖</h3><h4 id="本地-AAR-的依赖"><a href="#本地-AAR-的依赖" class="headerlink" title="本地 AAR 的依赖"></a>本地 AAR 的依赖</h4><p>在组件化的开发中，有时候遇到某个 lib 需要依赖某个本地 aar 文件<br>则在 <code>dependencies</code> 添加对本地的 aar 依赖，并将 aar 依赖文件放入 <code>libs</code> 目录下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile(name:&#x27;aar_file_name&#x27;, ext:&#x27;aar&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>如果此时有多个 Flavors ，则在 <code>compile</code> 前添加 Flavor 名字，如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">flavors1Compile(name: &#x27;aar_file_name&#x27;, ext: &#x27;aar&#x27;)</span><br><span class="line">flavors2Compile(name: &#x27;aar_file_name&#x27;, ext: &#x27;aar&#x27;)</span><br><span class="line">flavors3Compile(name: &#x27;aar_file_name&#x27;, ext: &#x27;aar&#x27;)</span><br></pre></td></tr></table></figure>
+<p>但如果这个库以同样的方式被依赖的话，会因为找不到这个文件而报错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error:Failed to resolve: :arr_file_name: Open File</span><br></pre></td></tr></table></figure>
+<p>这时可以在项目的 <code>build.gradle</code> 中配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">allprojects &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        flatDir &#123;</span><br><span class="line">            // 由于Library module中引用了 lib 库的 aar，在多 module 的情况下，</span><br><span class="line">            // 其他的module编译会报错，所以需要在所有工程的repositories</span><br><span class="line">            // 下把Library module中的libs目录添加到依赖关系中</span><br><span class="line">            dirs project(&#x27;:lib_name&#x27;).file(&#x27;libs&#x27;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="跳转-router"><a href="#跳转-router" class="headerlink" title="跳转 router"></a>跳转 router</h2><p>在不同的<code>module</code>中，要实现跨<code>module</code>之间的跳转，</p>
+<ol>
+<li>可以使用<code>intent</code>并设置<code>data</code>里的<code>host</code>和<code>scheme</code>，用隐式调用进行跳转。<br>例如，在<code>AndroidManifest</code>中设置</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity </span><br><span class="line">    android:exported=&quot;false&quot; //设置其他 application 不能唤起我们的 application</span><br><span class="line">    android:name=&quot;me.ppting.secondmoudle.MainActivity&quot;&gt;</span><br><span class="line">    &lt;intent-filter&gt;</span><br><span class="line">        &lt;action android:name=&quot;me.ppting.jump&quot;/&gt;</span><br><span class="line">        &lt;category android:name=&quot;android.intent.category.DEFAULT&quot;/&gt;</span><br><span class="line">        &lt;data android:host=&quot;ppting.me&quot;</span><br><span class="line">            android:scheme=&quot;second&quot;/&gt;</span><br><span class="line">    &lt;/intent-filter&gt;</span><br><span class="line">&lt;/activity&gt;</span><br></pre></td></tr></table></figure>
+
+<p>要进行跳转时，用下面的代码进行跳转</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = new Intent();</span><br><span class="line">intent.setAction(&quot;me.ppting.jump&quot;);</span><br><span class="line">intent.setData(Uri.parse(&quot;second://ppting.me&quot;));</span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure>
+
+<p>最后放一张最终的架构图<br><img src="https://i.loli.net/2020/05/02/zoR6FVxBKtpYmdw.png" alt="note_android_modularity_architecture.png"></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Android 组件化开发</p><p><a href="https://ppting.me/2017/12/24/2017_12_24_component_for_android/">https://ppting.me/2017/12/24/2017_12_24_component_for_android/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>PPTing</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2017-12-24</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-02-04</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2018/04/14/2018_04_14_justify-in-android/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Android TextView 两端对齐</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2016/10/18/2016_10_18_retrofit_with_okhttp/"><span class="level-item">Retrofit with okhttp</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "f99fadb989f746bb9cd4376e2b3d40d4",
+            repo: "ppting.github.io",
+            owner: "PPTing",
+            clientID: "8ee6c32324c60fd9fe83",
+            clientSecret: "caabfe4dc60fd4b19575bcb4b754d5068a0f7a41",
+            admin: ["PPTing"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://www.gravatar.com/avatar/f10df62c29905b9b4ba7aaa81b28f152?s=128" alt="PPTing"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">PPTing</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">45</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">7</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">7</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/PPTing" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/PPTing"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Android-组件化开发"><span class="level-left"><span class="level-item">1</span><span class="level-item">Android 组件化开发</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#AndroidManifest"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">AndroidManifest</span></span></a></li><li><a class="level is-mobile" href="#build-gradle"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">build.gradle</span></span></a></li><li><a class="level is-mobile" href="#Application"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">Application</span></span></a></li><li><a class="level is-mobile" href="#资源文件"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">资源文件</span></span></a></li><li><a class="level is-mobile" href="#依赖版本"><span class="level-left"><span class="level-item">1.5</span><span class="level-item">依赖版本</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#依赖"><span class="level-left"><span class="level-item">1.5.1</span><span class="level-item">依赖</span></span></a></li><li><a class="level is-mobile" href="#版本"><span class="level-left"><span class="level-item">1.5.2</span><span class="level-item">版本</span></span></a></li><li><a class="level is-mobile" href="#debug-模式下依赖"><span class="level-left"><span class="level-item">1.5.3</span><span class="level-item">debug 模式下依赖</span></span></a></li><li><a class="level is-mobile" href="#多-Product-Flavors-模式下的依赖"><span class="level-left"><span class="level-item">1.5.4</span><span class="level-item">多 Product Flavors 模式下的依赖</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#本地-AAR-的依赖"><span class="level-left"><span class="level-item">1.5.4.1</span><span class="level-item">本地 AAR 的依赖</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#跳转-router"><span class="level-left"><span class="level-item">1.6</span><span class="level-item">跳转 router</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/HTML5/"><span class="level-start"><span class="level-item">HTML5</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/Mac/"><span class="level-start"><span class="level-item">Mac</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E4%BA%A7%E5%93%81/"><span class="level-start"><span class="level-item">产品</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%88%B7%E6%9C%BA/"><span class="level-start"><span class="level-item">刷机</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%9D%82%E8%B0%88/"><span class="level-start"><span class="level-item">杂谈</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-12-22T16:00:00.000Z">2021-12-23</time></p><p class="title"><a href="/2021/12/23/2021_12_23_concurrenthashmap/">ConcurrentHashMap 源码阅读笔记</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-11-23T16:00:00.000Z">2021-11-24</time></p><p class="title"><a href="/2021/11/24/2021_11_24_rxjava/">RxJava2 原理解析</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-11-20T16:00:00.000Z">2021-11-21</time></p><p class="title"><a href="/2021/11/21/2021_11_21_java_proxy/">Java 动态代理</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-05-07T06:17:39.000Z">2021-05-07</time></p><p class="title"><a href="/2021/05/07/2021_05_07_bitmap_in_android/">Android 中的图片内存</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-20T16:00:00.000Z">2021-04-21</time></p><p class="title"><a href="/2021/04/21/2021_04_21_about_handler_in_android/">Handler 消息机制</a></p></div></article></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/favicon.ico" alt="PPTing&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2022 PPTing</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/PPTing"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

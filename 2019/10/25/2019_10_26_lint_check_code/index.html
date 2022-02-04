@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>使用 Lint 进行代码检查 - PPTing&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="PPTing&#039;s Blog"><meta name="msapplication-TileImage" content="/favicon.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="PPTing&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="使用 Lint 进行代码检查背景为了进一步规范协同合作中的代码规范，避免写低级 Bug 和对代码进行规约，在调研了多种方案后，决定使用该种方案对代码进行自动化检查和规约"><meta property="og:type" content="blog"><meta property="og:title" content="使用 Lint 进行代码检查"><meta property="og:url" content="https://ppting.me/2019/10/25/2019_10_26_lint_check_code/"><meta property="og:site_name" content="PPTing&#039;s Blog"><meta property="og:description" content="使用 Lint 进行代码检查背景为了进一步规范协同合作中的代码规范，避免写低级 Bug 和对代码进行规约，在调研了多种方案后，决定使用该种方案对代码进行自动化检查和规约"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://raw.githubusercontent.com/PPTing/AwesomeLint/master/images/Xnip2019-09-16_16-00-10.png"><meta property="article:published_time" content="2019-10-25T12:37:24.000Z"><meta property="article:modified_time" content="2022-02-04T05:40:05.080Z"><meta property="article:author" content="PPTing"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://raw.githubusercontent.com/PPTing/AwesomeLint/master/images/Xnip2019-09-16_16-00-10.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://ppting.me/2019/10/25/2019_10_26_lint_check_code/"},"headline":"使用 Lint 进行代码检查","image":["https://raw.githubusercontent.com/PPTing/AwesomeLint/master/images/Xnip2019-09-16_16-00-10.png"],"datePublished":"2019-10-25T12:37:24.000Z","dateModified":"2022-02-04T05:40:05.080Z","author":{"@type":"Person","name":"PPTing"},"publisher":{"@type":"Organization","name":"PPTing's Blog","logo":{"@type":"ImageObject","url":"https://ppting.me/favicon.ico"}},"description":"使用 Lint 进行代码检查背景为了进一步规范协同合作中的代码规范，避免写低级 Bug 和对代码进行规约，在调研了多种方案后，决定使用该种方案对代码进行自动化检查和规约"}</script><link rel="canonical" href="https://ppting.me/2019/10/25/2019_10_26_lint_check_code/"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-51029889-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-51029889-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start -->
+        <script>
+            function switchTab(element) {
+                const id = element.parentElement.id;
+                const tabElements = element.parentElement.parentElement.children;
+                const contentElements = element.parentElement.parentElement.parentElement.parentElement.children[1].children;
+                for (let i = 0; i < tabElements.length; i++) {
+                    const $tab = tabElements[i];
+                    const $content = contentElements[i];
+                    if ($tab.id === id) {
+                        $tab.classList.add('is-active');
+                    } else {
+                        $tab.classList.remove('is-active');
+                    }
+                    if ($content.id === id) {
+                        $content.classList.remove('is-hidden');
+                    } else {
+                        $content.classList.add('is-hidden');
+                    }
+                }
+            }
+        </script>
+        <!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="PPTing's Blog" type="application/atom+xml">
+</head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/favicon.ico" alt="PPTing&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/PPTing"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-10-25T12:37:24.000Z" title="10/25/2019, 8:37:24 PM">2019-10-25</time>发表</span><span class="level-item"><time dateTime="2022-02-04T05:40:05.080Z" title="2/4/2022, 1:40:05 PM">2022-02-04</time>更新</span><span class="level-item">15 分钟读完 (大约2198个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">使用 Lint 进行代码检查</h1><div class="content"><h1 id="使用-Lint-进行代码检查"><a href="#使用-Lint-进行代码检查" class="headerlink" title="使用 Lint 进行代码检查"></a>使用 Lint 进行代码检查</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>为了进一步规范协同合作中的代码规范，避免写低级 Bug 和对代码进行规约，在调研了多种方案后，决定使用该种方案对代码进行自动化检查和规约</p>
+<span id="more"></span>
+
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>Github 开源地址：<a target="_blank" rel="noopener" href="https://github.com/PPTing/AwesomeLint">https://github.com/PPTing/AwesomeLint</a></p>
+<ol>
+<li>先在配置文件(<code>local.properties</code>)中配置 <code>nexusUrl</code> 的值为本地仓库的地址</li>
+<li>复制 git hook 脚本<br></li>
+</ol>
+<p>2.1 在根目录下执行执行<br>Windows:</p>
+<p>  2.1.1 修改 <code>pre-commit-windows</code> 文件中的第一行代码中的<code>D:/Git</code>为自己本机电脑的 <code>Git</code> 安装目录，即第一行代码为声明 <code>sh.exe</code> 的目录<br>  2.1.2 执行 <code>gradle installGitHooks</code></p>
+<p>Mac OS&#x2F;Linux:  <code>./gradlew installGitHooks</code><br></p>
+<p>或者在 <code>Android Studio</code> 中右边面板上找到 <code>root-Tasks-other-installGitHooks</code> 并双击执行</p>
+<p>2.2 赋予执行脚本可执行权限 <code>chmod +x .git/hooks/pre-commit</code><br></p>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>使用<strong>git提交增量检查</strong>时需要配置ANDROID_HOME环境变量(需要以ANDROID_HOME命名并加入到path中，因为在Lint框架中执行Lint检查时需要获取Android环境变量)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Windows环境：在电脑-&gt;属性-&gt;环境变量中编辑即可</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Mac OS/Linux环境：编辑 ~/.bashrc即可</span><br><span class="line">vi ~./bashrc</span><br><span class="line"><span class="built_in">export</span> ANDROID_HOME=<span class="variable">$HOME</span>/&#123;Android SDK 路径&#125;</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$ANDROID_HOME</span>/tools</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="实时提示"><a href="#实时提示" class="headerlink" title="实时提示"></a>实时提示</h3><blockquote>
+<p>在 Android Studio 中进行实时提示</p>
+</blockquote>
+<h4 id="进行配置"><a href="#进行配置" class="headerlink" title="进行配置"></a>进行配置</h4><p><strong>方法一</strong></p>
+<ul>
+<li>将自定义 Lint 规则的 aar 包放入项目中，例如 <code>$&#123;root&#125;/libs</code> 目录①</li>
+<li>在项目的根目录下的 <code>build.gradle</code> 文件内的 <code>repositories</code> block 中为所有的 module 添加 aar 的路径(主要是便于管理，不需要所有 module 的 build.gradle 文件都写一遍 aar 路径)</li>
+</ul>
+<p>eg</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">allprojects&#123;</span><br><span class="line">    repositories&#123;</span><br><span class="line">        flatDir&#123;</span><br><span class="line">            dirs &quot;../$&#123;root&#125;/libs&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>在每个 module 中的 <code>dependencies</code> 中加入 <code>implementation (name:&#39;AAR的名字&#39;, ext:&#39;aar&#39;)</code> 即可</li>
+</ul>
+<p><strong>方法二</strong></p>
+<p>将 <code>lintRules</code> 发布到仓库中，再通过远程依赖在每个 module 中进行依赖<br>即 <code>implementation &#39;me.ppting.plugin:lintPreview:1.0.0.beta&#39;</code></p>
+<h5 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h5><blockquote>
+<p>目前只自定义了几个规则，例如</p>
+</blockquote>
+<ul>
+<li>类名和方法名的命名需要符合驼峰命名法</li>
+</ul>
+<p>效果如下 <img src="https://raw.githubusercontent.com/PPTing/AwesomeLint/master/images/Xnip2019-09-16_16-00-10.png" alt="Lint 检测后的展示效果"></p>
+<p>在 IDE 中会根据错误级别进行相应的提示，在 <code>Darcula</code> 主题下默认会以黄色的前景色进行提示，将鼠标移至该代码块则会有浮窗提示问题</p>
+<h4 id="去除提示-SuppressLint"><a href="#去除提示-SuppressLint" class="headerlink" title="去除提示(SuppressLint)"></a>去除提示(SuppressLint)</h4><p>假如某个 Lint 规则提示代码有误，但实际上是因为自定义规则的检测有误导致误报，或者代码并没有错误，可以使用 <code>@SuppressLint</code> 对该代码段进行注解，注解的参数填写 Lint 规则的 id，一般会在浮窗中展示该规则 id。</p>
+<p>如果实在不知道该规则 id ，可以使用 <code>@SuppressLint(&quot;All&quot;)</code> 忽略所有的规则，但这样就会导致该方法内新增的代码也无法进行 Lint 规则检测，请<em><strong>谨慎使用</strong></em></p>
+<p>这样该方法就会忽略该规则的检测</p>
+<h4 id="自定义规则"><a href="#自定义规则" class="headerlink" title="自定义规则"></a>自定义规则</h4><h4 id="编写规则"><a href="#编写规则" class="headerlink" title="编写规则"></a>编写规则</h4><p>在 lintRules module 中编写规则</p>
+<ul>
+<li>创建一个<code>继承 Detector 的类</code></li>
+<li>类中创建一个 ISSUE 表示该类用来检测的问题</li>
+<li>在 Register 类中对该 issue 进行注册</li>
+</ul>
+<blockquote>
+<p>具体参考现有的代码</p>
+</blockquote>
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><ul>
+<li>执行 lintAAR<code>中的</code>copyAAR&#96; 的 task 即可编译出 aar 文件并复制到 app module 中，</li>
+<li>Sync Project With Gradle Files (点击 Gradle 的同步按钮)</li>
+</ul>
+<p>即可在 app module 中测试各个规则是否生效</p>
+<h4 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h4><p>测试完毕，将 aar 文件复制到其他应用到它的地方即可，并同步即可生效</p>
+<blockquote>
+<p>PS. 如果不生效，尝试重启 Android Studio </p>
+</blockquote>
+<h3 id="COMMIT-HOOKS"><a href="#COMMIT-HOOKS" class="headerlink" title="COMMIT HOOKS"></a>COMMIT HOOKS</h3><blockquote>
+<p>为了强制进行一些编码规范等的执行，会在 git hooks 在进行 commit 后做检查，如果检测不通过，则会触发 git reset 进行回滚此次提交，并将错误提示日志打印到 <code>lint-check-result.log</code> 文件中</p>
+</blockquote>
+<h4 id="大概原理"><a href="#大概原理" class="headerlink" title="大概原理"></a>大概原理</h4><p>i. 在项目中应用 gradle plugin，在每次 git commit 后，在 <code>.git/hooks</code> 中的 <code>pre-commit</code> hook 会自动执行，会到项目根目录下执行 <code>./gradlew lintCheck -PisLintCheck</code></p>
+<p>ii. lintCheck 会通过 <code>git diff</code> 获取暂存区中的代码修改，并记录其行数和文件名</p>
+<p>iii. 将所有的改动的文件进行 lint 操作，并记录其 issue，如果某个 issue 对应的代码行正好是改动的代码行，则将记录数(记为 K)加一</p>
+<p>iiii. 当结束 lintCheck 后，如果 K &gt; 0 ，则抛出异常，使本次提交失败</p>
+<p>PS. 如果该 <code>Issue</code> 是 <code>Warning</code> 级别的，Android Studio 不会进行提示，如果该 <code>Issue</code> 是 <code>Error</code> 级别的，Android Studio 会有错误提示弹窗</p>
+<h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><ol>
+<li><p>在项目根目录下的 <code>build.gradle</code> 中应用插件 </p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply plugin:&quot;me.ppting.plugin.lint&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置 lintCheck 配置</p>
+<p> 在 根目录下的 <code>build.gradle</code> 中添加 lintCheck 配置</p>
+<p> eg.</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">lintConfig &#123;</span><br><span class="line">    //配置Lint检查文件的类型</span><br><span class="line">    lintCheckFileType = &quot;.java,.xml,.kt&quot;</span><br><span class="line">    //是否将检查文件的所有扫描结果都输出</span><br><span class="line">    lintReportAll = true</span><br><span class="line">    //是否进行 lint 检查，默认为 true</span><br><span class="line">    isOpenLint = false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>复制 <code>pre-commit</code> 脚本到本地的 <code>.git/hooks</code> 目录下</p>
+<p> 在根目录下执行执行  </p>
+<blockquote>
+<p>Mac&#x2F;Linux: <code>./gradlew installGitHooks</code><br><br>Windows: <code>gradle installGitHooks</code></p>
+</blockquote>
+<p> 或者在 <code>Android Studio</code> 中右边面板上找到 <code>root-Tasks-other-installGitHooks</code> 并双击执行</p>
+</li>
+</ol>
+<p>PS. 如果无法执行 <code>pre-commit</code> 脚本，可能是权限问题，给该脚本加上可执行权限</p>
+<p><code>chmod +x .git/hooks/pre-commit</code></p>
+<p>PSS. <strong>强制关闭 hook 操作</strong></p>
+<ul>
+<li>如果要强制关闭在 commit 之后的 hook 操作，可以使用 <code>deleteGitHooks</code> task 将 <code>.git/hooks/pre-commit</code> 文件删除</li>
+<li>或者在 commit 时候加上 <code> --no-verify</code> 参数</li>
+</ul>
+<h3 id="遇到的一些坑和解决方案"><a href="#遇到的一些坑和解决方案" class="headerlink" title="遇到的一些坑和解决方案"></a>遇到的一些坑和解决方案</h3><p><em><strong>坑 1：</strong></em> 由于 lint 的 api 依赖于 kotlin-compiler ，而这会造成 Android Studio 的 Kotlin-Plugin 冲突，而导致无法编译</p>
+<p><strong>错误提示：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">FAILURE: Build failed with an exception.</span><br><span class="line"></span><br><span class="line">* What went wrong:</span><br><span class="line">org.jetbrains.kotlin.cli.common.arguments.K2JVMCompilerArguments.setAllowNoSourceFiles(Z)V</span><br><span class="line"></span><br><span class="line">* Try:</span><br><span class="line">Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.</span><br><span class="line"></span><br><span class="line">* Get more help at https://help.gradle.org</span><br><span class="line"></span><br><span class="line">Deprecated Gradle features were used in this build, making it incompatible with Gradle 6.0.</span><br><span class="line">Use &#x27;--warning-mode all&#x27; to show the individual deprecation warnings.</span><br><span class="line">See https://docs.gradle.org/5.4.1/userguide/command_line_interface.html#sec:command_line_warnings</span><br><span class="line"></span><br><span class="line">BUILD FAILED in 20s</span><br></pre></td></tr></table></figure>
+
+<p><strong>解决方法：</strong></p>
+<p>在 buildSrc&#x2F;build.gradle 文件中控制 lint api 的依赖</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">configurations &#123;</span><br><span class="line">    all*.exclude group: &#x27;com.android.tools.external.com-intellij&#x27;,module:&quot;kotlin-compiler&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>这样可以编译，但会导致 lintCheck task 失败<br>于是我们使用一个变量 <code>isLintCheck</code> 来控制 lint api 是否要 exclude 掉 kotlin-compiler 的依赖</p>
+<p>如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* lintCheck 需要有 kotlin-compiler</span><br><span class="line">* run 不需要 kotlin-compiler</span><br><span class="line">*/</span><br><span class="line">configurations &#123;</span><br><span class="line">    boolean isLintCheck = project.hasProperty(&quot;isLintCheck&quot;)</span><br><span class="line">    if (!isLintCheck) &#123;</span><br><span class="line">        all*.exclude group: &#x27;com.android.tools.external.com-intellij&#x27;,module:&quot;kotlin-compiler&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以要求我们在执行 lintCheck 任务时加上参数 -PisLintCheck </p>
+<p><em><strong>坑 2：</strong></em> 将 plugin 发布到仓库中作为插件使用</p>
+<blockquote>
+<p>当尝试将 plugin 发布到仓库中，并在项目中使用 classpath 进行依赖该插件，会导致无法编译</p>
+</blockquote>
+<p><strong>错误提示：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.jetbrains.kotlin.resolve.diagnostics.DiagnosticSuppressor$Companion.getEP_NAME()Lcom/intellij/openapi/extensions/ExtensionPointName;</span><br></pre></td></tr></table></figure>
+
+<p><strong>解决方案：</strong></p>
+<p>只能将插件项目通过 buildSrc module 的方式引入到需要使用 lint 的项目中</p>
+<p><em><strong>坑 3：</strong></em> walle 报错</p>
+<blockquote>
+<p>由于升级了 Gradle 的版本，项目中也使用了美团的 walle 作为多渠道打包的方案，在编译阶段会报错</p>
+</blockquote>
+<p><strong>错误提示：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">API &#x27;variantOutput.getPackageApplication()&#x27; is obsolete and has been replaced with &#x27;variant.getPackageApplicationProvider()&#x27;. It will be removed at the end of 2019.</span><br></pre></td></tr></table></figure>
+
+<p><strong>解决方案：</strong></p>
+<p>walle 已经修复了该<a target="_blank" rel="noopener" href="https://github.com/Meituan-Dianping/walle/pull/285">问题</a>，详情请查阅 <a target="_blank" rel="noopener" href="https://github.com/Meituan-Dianping/walle/commit/c3869bbce43254c2fd44d67edf81fc9ea925b037">fixAPI ‘variant.getAssemble()’ is obsolete and has been replaced with…</a><br><br>但 walle 并未将修复的版本发布(摊手)，可以自行下载<a target="_blank" rel="noopener" href="https://github.com/Meituan-Dianping/walle">源码</a>编译到自己的仓库中引用</p>
+<h2 id="如何生产进行实时-lintRules-的-aar"><a href="#如何生产进行实时-lintRules-的-aar" class="headerlink" title="如何生产进行实时 lintRules 的 aar"></a>如何生产进行实时 lintRules 的 aar</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">发布 aar，直接运行 `lintRules-uploadArchives` 的 task 即可发布到仓库中</span><br></pre></td></tr></table></figure>
+
+<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>① ${root} 即项目的根地址文件夹名，请按需修改</p>
+<h3 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h3><p>本文是在巨人的肩膀上进行探索并实践的，感谢 <br><br>①<a target="_blank" rel="noopener" href="https://github.com/lsc1993">lsc1993</a> 的<a target="_blank" rel="noopener" href="https://github.com/lsc1993/AwesomeLint">AwesomeLint</a> <br><br>②<a target="_blank" rel="noopener" href="https://juejin.im/user/5995c9f2f265da248c3934a5">GitCode8</a> 的 <a target="_blank" rel="noopener" href="https://juejin.im/post/5d307615f265da1b6b1d0dd9">代码洁癖症的我，学习Lint学到心态爆炸</a><br><br>本实践也是在该基础上进行改进并应用到项目中的，代码也是 fork 自该项目。在其基础上进行添加了对 Kotlin 的支持，并在应用到项目中时踩了很多坑也将其填完了。借此也将填坑经验分享出来，以供借鉴<br></p>
+<p><strong>诚惶诚恐，若有错误，不吝赐教</strong></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>使用 Lint 进行代码检查</p><p><a href="https://ppting.me/2019/10/25/2019_10_26_lint_check_code/">https://ppting.me/2019/10/25/2019_10_26_lint_check_code/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>PPTing</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-10-25</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-02-04</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/02/01/2020_02_01_application_lifecycle/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">从一次渠道包的渠道上报失败查看 ApplicationContext 的赋值过程</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2019/08/09/record-an-white-screen-accident-for-webview-safe-browse/"><span class="level-item">记录一次 Android 内嵌 WebView 白屏无法加载内容的事故</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "ef5f26a57ac770baeb39f392c72e2d54",
+            repo: "ppting.github.io",
+            owner: "PPTing",
+            clientID: "8ee6c32324c60fd9fe83",
+            clientSecret: "caabfe4dc60fd4b19575bcb4b754d5068a0f7a41",
+            admin: ["PPTing"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://www.gravatar.com/avatar/f10df62c29905b9b4ba7aaa81b28f152?s=128" alt="PPTing"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">PPTing</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">45</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">7</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">7</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/PPTing" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/PPTing"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#使用-Lint-进行代码检查"><span class="level-left"><span class="level-item">1</span><span class="level-item">使用 Lint 进行代码检查</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#背景"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">背景</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#使用"><span class="level-left"><span class="level-item">1.1.1</span><span class="level-item">使用</span></span></a></li><li><a class="level is-mobile" href="#环境准备"><span class="level-left"><span class="level-item">1.1.2</span><span class="level-item">环境准备</span></span></a></li><li><a class="level is-mobile" href="#实时提示"><span class="level-left"><span class="level-item">1.1.3</span><span class="level-item">实时提示</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#进行配置"><span class="level-left"><span class="level-item">1.1.3.1</span><span class="level-item">进行配置</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#效果"><span class="level-left"><span class="level-item">1.1.3.1.1</span><span class="level-item">效果</span></span></a></li></ul></li><li><a class="level is-mobile" href="#去除提示-SuppressLint"><span class="level-left"><span class="level-item">1.1.3.2</span><span class="level-item">去除提示(SuppressLint)</span></span></a></li><li><a class="level is-mobile" href="#自定义规则"><span class="level-left"><span class="level-item">1.1.3.3</span><span class="level-item">自定义规则</span></span></a></li><li><a class="level is-mobile" href="#编写规则"><span class="level-left"><span class="level-item">1.1.3.4</span><span class="level-item">编写规则</span></span></a></li><li><a class="level is-mobile" href="#测试"><span class="level-left"><span class="level-item">1.1.3.5</span><span class="level-item">测试</span></span></a></li><li><a class="level is-mobile" href="#发布"><span class="level-left"><span class="level-item">1.1.3.6</span><span class="level-item">发布</span></span></a></li></ul></li><li><a class="level is-mobile" href="#COMMIT-HOOKS"><span class="level-left"><span class="level-item">1.1.4</span><span class="level-item">COMMIT HOOKS</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#大概原理"><span class="level-left"><span class="level-item">1.1.4.1</span><span class="level-item">大概原理</span></span></a></li><li><a class="level is-mobile" href="#应用"><span class="level-left"><span class="level-item">1.1.4.2</span><span class="level-item">应用</span></span></a></li></ul></li><li><a class="level is-mobile" href="#遇到的一些坑和解决方案"><span class="level-left"><span class="level-item">1.1.5</span><span class="level-item">遇到的一些坑和解决方案</span></span></a></li></ul></li><li><a class="level is-mobile" href="#如何生产进行实时-lintRules-的-aar"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">如何生产进行实时 lintRules 的 aar</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#备注"><span class="level-left"><span class="level-item">1.2.1</span><span class="level-item">备注</span></span></a></li><li><a class="level is-mobile" href="#感谢"><span class="level-left"><span class="level-item">1.2.2</span><span class="level-item">感谢</span></span></a></li></ul></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/HTML5/"><span class="level-start"><span class="level-item">HTML5</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/Mac/"><span class="level-start"><span class="level-item">Mac</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E4%BA%A7%E5%93%81/"><span class="level-start"><span class="level-item">产品</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%88%B7%E6%9C%BA/"><span class="level-start"><span class="level-item">刷机</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%9D%82%E8%B0%88/"><span class="level-start"><span class="level-item">杂谈</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-12-22T16:00:00.000Z">2021-12-23</time></p><p class="title"><a href="/2021/12/23/2021_12_23_concurrenthashmap/">ConcurrentHashMap 源码阅读笔记</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-11-23T16:00:00.000Z">2021-11-24</time></p><p class="title"><a href="/2021/11/24/2021_11_24_rxjava/">RxJava2 原理解析</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-11-20T16:00:00.000Z">2021-11-21</time></p><p class="title"><a href="/2021/11/21/2021_11_21_java_proxy/">Java 动态代理</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-05-07T06:17:39.000Z">2021-05-07</time></p><p class="title"><a href="/2021/05/07/2021_05_07_bitmap_in_android/">Android 中的图片内存</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-20T16:00:00.000Z">2021-04-21</time></p><p class="title"><a href="/2021/04/21/2021_04_21_about_handler_in_android/">Handler 消息机制</a></p></div></article></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/favicon.ico" alt="PPTing&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2022 PPTing</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/PPTing"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

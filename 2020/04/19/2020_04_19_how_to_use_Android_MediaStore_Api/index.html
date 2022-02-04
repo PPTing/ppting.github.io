@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Android MediaStore Api 使用 - PPTing&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="PPTing&#039;s Blog"><meta name="msapplication-TileImage" content="/favicon.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="PPTing&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="本文是对 关于 Android 的文件存储目录的补充  在 Android Q 后，获得 External Storage 的权限后 使用 Environment.getExternalStorageDirectory 和 File Api 对外置存储中的文件进行操作 这种方式已经不被允许了，需要开发者进行适配，后续开发者需要通过 Storage Access Framework 或者 Me"><meta property="og:type" content="blog"><meta property="og:title" content="Android MediaStore Api 使用"><meta property="og:url" content="https://ppting.me/2020/04/19/2020_04_19_how_to_use_Android_MediaStore_Api/"><meta property="og:site_name" content="PPTing&#039;s Blog"><meta property="og:description" content="本文是对 关于 Android 的文件存储目录的补充  在 Android Q 后，获得 External Storage 的权限后 使用 Environment.getExternalStorageDirectory 和 File Api 对外置存储中的文件进行操作 这种方式已经不被允许了，需要开发者进行适配，后续开发者需要通过 Storage Access Framework 或者 Me"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://i.loli.net/2020/04/19/GQZdv4CSf7qVt2o.png"><meta property="og:image" content="https://i.loli.net/2020/04/19/bz23sLSNlneFACZ.jpg"><meta property="og:image" content="https://i.loli.net/2020/04/19/zbYNDKIyV7vci6m.jpg"><meta property="og:image" content="https://i.loli.net/2020/04/19/htFfIQ94J25XpBV.jpg"><meta property="article:published_time" content="2020-04-18T16:00:00.000Z"><meta property="article:modified_time" content="2022-02-04T05:40:26.618Z"><meta property="article:author" content="PPTing"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://i.loli.net/2020/04/19/GQZdv4CSf7qVt2o.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://ppting.me/2020/04/19/2020_04_19_how_to_use_Android_MediaStore_Api/"},"headline":"Android MediaStore Api 使用","image":["https://i.loli.net/2020/04/19/GQZdv4CSf7qVt2o.png","https://i.loli.net/2020/04/19/bz23sLSNlneFACZ.jpg","https://i.loli.net/2020/04/19/zbYNDKIyV7vci6m.jpg","https://i.loli.net/2020/04/19/htFfIQ94J25XpBV.jpg"],"datePublished":"2020-04-18T16:00:00.000Z","dateModified":"2022-02-04T05:40:26.618Z","author":{"@type":"Person","name":"PPTing"},"publisher":{"@type":"Organization","name":"PPTing's Blog","logo":{"@type":"ImageObject","url":"https://ppting.me/favicon.ico"}},"description":"本文是对 关于 Android 的文件存储目录的补充  在 Android Q 后，获得 External Storage 的权限后 使用 Environment.getExternalStorageDirectory 和 File Api 对外置存储中的文件进行操作 这种方式已经不被允许了，需要开发者进行适配，后续开发者需要通过 Storage Access Framework 或者 Me"}</script><link rel="canonical" href="https://ppting.me/2020/04/19/2020_04_19_how_to_use_Android_MediaStore_Api/"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-51029889-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-51029889-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start -->
+        <script>
+            function switchTab(element) {
+                const id = element.parentElement.id;
+                const tabElements = element.parentElement.parentElement.children;
+                const contentElements = element.parentElement.parentElement.parentElement.parentElement.children[1].children;
+                for (let i = 0; i < tabElements.length; i++) {
+                    const $tab = tabElements[i];
+                    const $content = contentElements[i];
+                    if ($tab.id === id) {
+                        $tab.classList.add('is-active');
+                    } else {
+                        $tab.classList.remove('is-active');
+                    }
+                    if ($content.id === id) {
+                        $content.classList.remove('is-hidden');
+                    } else {
+                        $content.classList.add('is-hidden');
+                    }
+                }
+            }
+        </script>
+        <!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="PPTing's Blog" type="application/atom+xml">
+</head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/favicon.ico" alt="PPTing&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/PPTing"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-04-18T16:00:00.000Z" title="4/19/2020, 12:00:00 AM">2020-04-19</time>发表</span><span class="level-item"><time dateTime="2022-02-04T05:40:26.618Z" title="2/4/2022, 1:40:26 PM">2022-02-04</time>更新</span><span class="level-item">15 分钟读完 (大约2264个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">Android MediaStore Api 使用</h1><div class="content"><br>
+
+<blockquote>
+<p>本文是对 <a href="">关于 Android 的文件存储目录</a>的补充</p>
+</blockquote>
+<p>在 Android Q 后，<em>获得 External Storage 的权限后 使用 Environment.getExternalStorageDirectory 和 File Api 对外置存储中的文件进行操作</em> 这种方式已经不被允许了，需要开发者进行适配，后续开发者需要通过 <a href="https://ppting.me/2020/04/19/2020_04_19_about_Storage_Access_Framework/"><strong>Storage Access Framework</strong></a> 或者 <strong>MediaStore</strong> 的 Api 来对 External Storage 中的文件进行操作</p>
+<span id="more"></span>
+
+<h2 id="关于权限"><a href="#关于权限" class="headerlink" title="关于权限"></a>关于权限</h2><blockquote>
+<p>READ_EXTERNAL_STORAGE WRITE_EXTERNAL_STORAGE</p>
+</blockquote>
+<p>通过 MediaStore Api 访问应用自身存放到公共目录下的文件不需要申请权限，而如果要访问其他应用保存到公共目录下的文件则需要申请权限</p>
+<h2 id="关于-MimeType"><a href="#关于-MimeType" class="headerlink" title="关于 MimeType"></a>关于 MimeType</h2><p>从 <a href=""><code>com.android.media.MediaFormat</code></a> 源码中我们可以找到 Android 定义好的一些 MineType</p>
+<p>例如：<br><img src="https://i.loli.net/2020/04/19/GQZdv4CSf7qVt2o.png" alt="carbon"></p>
+<h2 id="创建-x2F-保存文件"><a href="#创建-x2F-保存文件" class="headerlink" title="创建&#x2F;保存文件"></a>创建&#x2F;保存文件</h2><p>构造一个 ContentValues 对象，通过 ContentResolver.insert 插入到对应的目录中，该方法会返回一个 Uri，通过对该 Uri 进行文件流写入即可</p>
+<p>示例：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">saveImage</span><span class="params">(bitmap: <span class="type">Bitmap</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">val</span> values = ContentValues()</span><br><span class="line">    <span class="keyword">val</span> insertUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values)</span><br><span class="line">    insertUri?.let &#123;</span><br><span class="line">        contentResolver.openOutputStream(it).use &#123;outputStream-&gt;</span><br><span class="line">            bitmap.compress(Bitmap.CompressFormat.PNG,<span class="number">100</span>,outputStream)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ul>
+<li>ContentValues 其实是内部使用了一个 ArrayMap 的数据结构用来存放数据，所以我们可以根据我们需要保存的文件信息，给 ContentValues 设置对应的值<br>例如：</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> values = ContentValues().apply &#123;</span><br><span class="line">            put(MediaStore.Images.Media.MIME_TYPE,<span class="string">&quot;image/png&quot;</span>)</span><br><span class="line">            put(MediaStore.Images.Media.DISPLAY_NAME,<span class="string">&quot;<span class="subst">$&#123;System.currentTimeMillis()&#125;</span>.png&quot;</span>)</span><br><span class="line">            put(MediaStore.Images.Media.RELATIVE_PATH,<span class="string">&quot;Pictures/DemoPicture&quot;</span>)</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>具体举几个例子，可见下面的表格</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mime_type</td>
+<td>设置文件的 MimeType</td>
+</tr>
+<tr>
+<td>_display_name</td>
+<td>指定保存的文件名，如果不设置，则系统会取当前的时间戳作为文件名</td>
+</tr>
+<tr>
+<td>relative_path</td>
+<td>指定保存的文件目录，例如上文我们将这个图片保存到了 Pictures&#x2F;DemoPicture 文件夹下，如果不设置这个值，则会被默认保存到对应的媒体类型的文件夹下，例如，图片文件(mimeType &#x3D; image&#x2F;*)会被保存到 Pictures(Environment#DIRECTORY_PICTURES) 中，需要注意的是，不能将文件放置到不对应的顶级文件夹下，比如将一个 mimeType 为 <code>audio/mpeg</code> 放大 Pictures 这样的行为是不被允许的，也就是如果设置 MIME_TYPE &#x3D; audia&#x2F;* 并将 RELATIVE_PATH 设置为 Environment#DIRECTORY_PICTURES 这样是会 Throw IllegalArgumentException 的</td>
+</tr>
+</tbody></table>
+<p>例如：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> values = ContentValues().apply &#123;</span><br><span class="line">            put(MediaStore.Images.Media.MIME_TYPE,<span class="string">&quot;image/png&quot;</span>)</span><br><span class="line">            <span class="comment">//这里将 Movies 设置为了 Primary directory </span></span><br><span class="line">            put(MediaStore.Images.Media.RELATIVE_PATH,<span class="string">&quot;<span class="subst">$&#123;Environment.DIRECTORY_MOVIES&#125;</span>/DemoPicture&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">val</span> insertUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values)</span><br></pre></td></tr></table></figure>
+
+<p>结果是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Caused by: java.lang.IllegalArgumentException: Primary directory Video not allowed <span class="keyword">for</span> content:<span class="comment">//media/external/images/media; allowed directories are [DCIM, Pictures]</span></span><br><span class="line">        at android.database.DatabaseUtils.readExceptionFromParcel(DatabaseUtils.java:<span class="number">170</span>)</span><br><span class="line">        at android.database.DatabaseUtils.readExceptionFromParcel(DatabaseUtils.java:<span class="number">140</span>)</span><br><span class="line">        at android.content.ContentProviderProxy.insert(ContentProviderNative.java:<span class="number">481</span>)</span><br><span class="line">        at android.content.ContentResolver.insert(ContentResolver.java:<span class="number">1828</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Android 外部存储中的标准存储文件目录如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">               sdcard</span><br><span class="line">audio/*        ├── Alarms                  </span><br><span class="line">------         ├── Audiobooks           </span><br><span class="line">image/*        ├── DCIM                 </span><br><span class="line">file/*         ├── Documents            </span><br><span class="line">NA             ├── Download             </span><br><span class="line">video/*        ├── Movies               </span><br><span class="line">audio/*        ├── Music                        </span><br><span class="line">audio/*        ├── Notifications        </span><br><span class="line">image/*        ├── Pictures             </span><br><span class="line">               │   └── Screenshots      </span><br><span class="line">audio/*        ├── Podcasts             </span><br><span class="line">audio/*        └── Ringtones            </span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>前面一列为 MimeType ，后一列为其对应的 Primary Directory<br>—— 表示未知</p>
+</blockquote>
+<p>需要注意的是，对于 Android 中的媒体类型，如果是需要提供给其他应用使用的，在卸载后仍需保留的媒体文件，按照规范，应当放到对应的公共目录媒体文件夹下</p>
+<table>
+<thead>
+<tr>
+<th>MimeType</th>
+<th>对应文件夹</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>图片(image&#x2F;*)</td>
+<td>DCIM,Pictures</td>
+</tr>
+<tr>
+<td>音频(audio&#x2F;*)</td>
+<td>Alarms, Music, Notifications, Podcasts, Ringtones</td>
+</tr>
+<tr>
+<td>视频(video&#x2F;*)</td>
+<td>Movies</td>
+</tr>
+<tr>
+<td>文档(file&#x2F;*)</td>
+<td>Documents,Download</td>
+</tr>
+</tbody></table>
+<p>当然，这些也都可以通过 MediaStore 放到 <code>Downloads</code> 文件夹下</p>
+<ul>
+<li>ContentValues 的 key 值可以通过 <code>MediaStore.XXX.Media.YYY</code> 获取到<br> XXX: 对应的媒体类型<br> YYY: 对应的字段常量</li>
+<li>RELATIVE_PATH 的 String 值不需要以 <code>/</code> 开头</li>
+<li>insert(uri: Uri,value: ContentValues) 的第一个参数可以通过 MediaStore 中的常量获取，具体如下</li>
+</ul>
+<h4 id="获取-insert-方法中的第一个入参的方式"><a href="#获取-insert-方法中的第一个入参的方式" class="headerlink" title="获取 insert 方法中的第一个入参的方式"></a>获取 insert 方法中的第一个入参的方式</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">* Images</span><br><span class="line">MediaStore.Images.Media.EXTERNAL_CONTENT_URI</span><br><span class="line">* Audio</span><br><span class="line">MediaStore.Audio.Media.EXTERNAL_CONTENT_URI</span><br><span class="line">* Video</span><br><span class="line">MediaStore.Video.Media.EXTERNAL_CONTENT_URI</span><br><span class="line">* Download</span><br><span class="line">MediaStore.Downloads.EXTERNAL_CONTENT_URI</span><br><span class="line">* Documents</span><br><span class="line"><span class="comment">//Documents 稍微有些特殊，需要通过 Files 获取</span></span><br><span class="line">MediaStore.Files.getContentUri(<span class="string">&quot;external&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="疑问-1"><a href="#疑问-1" class="headerlink" title="疑问 1"></a>疑问 1</h4><p>有个疑问是前文图标中标记为 <code>------</code> 未知的地方，根据官方文档，Audiobooks 是可以存放 <code>audio/*</code> 类型的文件的，但通过以下代码插入一个  <code>audio/*</code> 类型的文件却抛出异常了</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> values = ContentValues().apply &#123;</span><br><span class="line">            put(MediaStore.Audio.Media.MIME_TYPE,<span class="string">&quot;audio/*&quot;</span>)</span><br><span class="line">            put(MediaStore.Audio.Media.RELATIVE_PATH,<span class="string">&quot;<span class="subst">$&#123;Environment.DIRECTORY_AUDIOBOOKS&#125;</span>&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">val</span> insertUri = contentResolver.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,values)</span><br><span class="line"></span><br><span class="line"><span class="comment">//Exception 信息</span></span><br><span class="line">Primary directory Audiobooks not allowed <span class="keyword">for</span> content:<span class="comment">//media/external/audio/media; allowed directories are [Alarms, Music, Notifications, Podcasts, Ringtones]</span></span><br></pre></td></tr></table></figure>
+
+
+<p>其实就是 Android 会帮我们将这些媒体数据存放到一个数据库中，这些我们设置的数据都是数据库表中的字段，除了上面表格中罗列的一些常用的信息，还有很多数据可以设置，详细可以参考 <code>android.media.MediaStore.MediaColumns</code> 类，在这个类中我们发现了一个 <code>owner_package_name</code> 的字段，这个字段的作用，我们后面再说</p>
+<h2 id="删除自己应用创建的文件"><a href="#删除自己应用创建的文件" class="headerlink" title="删除自己应用创建的文件"></a>删除自己应用创建的文件</h2><p>同 SAF ，获取到 Uri 后即可通过<br><code>contentResolver.delete(uri,null,null)</code> 删除即可</p>
+<h2 id="查询自己应用的文件"><a href="#查询自己应用的文件" class="headerlink" title="查询自己应用的文件"></a>查询自己应用的文件</h2><blockquote>
+<p>通过 <code>Cursor query(@RequiresPermission.Read @NonNull Uri uri,@Nullable String[] projection, @Nullable String selection,@Nullable String[] selectionArgs, @Nullable String sortOrder)</code> 方法</p>
+</blockquote>
+<p>参数解释:</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>释义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>uri</td>
+<td>Uri</td>
+<td>提供检索内容的 Uri，其 scheme 是<code>content://</code></td>
+</tr>
+<tr>
+<td>projection</td>
+<td>String[]</td>
+<td>返回的列，如果传递 null 则所有列都返回(效率低下)</td>
+</tr>
+<tr>
+<td>selection</td>
+<td>String</td>
+<td>过滤条件，即 SQL 中的 <code>WHERE</code> 语句(但不需要写 <code>where</code> 本身)，如果传 null 则返回所有的数据</td>
+</tr>
+<tr>
+<td>selectionArgs</td>
+<td>String[]</td>
+<td>如果你在 selection 的参数加了 <code>?</code> 则会被本字段中的数据按顺序替换掉</td>
+</tr>
+<tr>
+<td>sortOrder</td>
+<td>String</td>
+<td>用来对数据进行排序，即 SQL 语句中的 <code>ORDER BY</code>(单不需要写<code>ORDER BY</code> 本身)，如果传 null 则按照默认顺序排序(可能是无序的)</td>
+</tr>
+</tbody></table>
+<p>举个🌰</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">getImages</span><span class="params">()</span></span>: List&lt;Uri&gt;&#123;</span><br><span class="line">    <span class="keyword">val</span> <span class="keyword">external</span> = MediaStore.Images.Media.EXTERNAL_CONTENT_URI</span><br><span class="line">    <span class="keyword">val</span> filesUris = mutableListOf&lt;Uri&gt;()</span><br><span class="line">    contentResolver.query(</span><br><span class="line">        <span class="comment">//从图片媒体信息中进行查询</span></span><br><span class="line">        <span class="keyword">external</span>,</span><br><span class="line">        <span class="comment">//只返回 |_ID|WIDTH|HEIGHT| 图片的 id和宽高的列信息</span></span><br><span class="line">        arrayOf(MediaStore.Images.Media._ID,MediaStore.Images.Media.WIDTH,MediaStore.Images.Media.HEIGHT) ,</span><br><span class="line">        <span class="comment">//过滤掉 id 不满足大于 230 的图片</span></span><br><span class="line">        <span class="string">&quot;<span class="subst">$&#123;MediaStore.Images.Media._ID&#125;</span> &gt; ? &quot;</span>,</span><br><span class="line">        arrayOf(<span class="string">&quot;230&quot;</span>),</span><br><span class="line">        <span class="comment">//返回的数据按照 id 降序排序</span></span><br><span class="line">        <span class="string">&quot;<span class="subst">$&#123;MediaStore.Images.Media._ID&#125;</span> DESC&quot;</span>)</span><br><span class="line">        ?.use &#123;</span><br><span class="line">            <span class="keyword">while</span> (it.moveToNext())&#123;</span><br><span class="line">                <span class="keyword">val</span> index = it.getColumnIndex(MediaStore.Images.Media._ID)</span><br><span class="line">                filesUris.add(ContentUris.withAppendedId(<span class="keyword">external</span>,it.getLong(index)))</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> filesUris</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="访问其他-App-的文件"><a href="#访问其他-App-的文件" class="headerlink" title="访问其他 App 的文件"></a>访问其他 App 的文件</h2><p>不知道大家有没有看到上面的标题写的都是「自己应用」的文件，这是因为我们的 App 至今还未申请 <code>READ_EXTERNAL_STORAGE</code> 和 <code>WRITE_EXTERNAL_STORAGE</code> 权限，通过 MediaStore Api 对自己应用创建的文件，是不需要权限的。这时因为在创建的时候系统会将我们的应用的 <code>packageName</code> 写入 <code>owner_package_name</code> 字段从而在后续的使用中判断这个文件是哪个应用创建的。</p>
+<p>那如果应用需要访问或者修改其他应用的文件怎么办呢。</p>
+<ol>
+<li><p>如果只是要读取，则申请 <code>READ_EXTERNAL_STORAGE</code> 权限后即可通过 MediaStore Api 进行读取</p>
+<p> 例如我们上述的<code>查询自己应用的文件</code>中的查询语句，如果申请了读取外置存储的权限后，返回的数据就会包含了其他 App 提供给 Media 的图片了<br> 如下图：<br> 没有读取权限时：<br> <img src="https://i.loli.net/2020/04/19/bz23sLSNlneFACZ.jpg"></p>
+<p> 获得读取权限后：<br> <img src="https://i.loli.net/2020/04/19/zbYNDKIyV7vci6m.jpg"></p>
+</li>
+</ol>
+<p>多出来几张其他 App 产生的图片</p>
+<ol start="2">
+<li><p>如果需要编辑修改甚至删除其他应用的文件，则需要申请 <code>WRITE_EXTERNAL_STORAGE</code> 权限。</p>
+<p> 如果当应用没有 <code>WRITE_EXTERNAL_STORAGE</code> 权限时，去修改其他 App 的文件时，则会 throw <code>java.lang.SecurityException: xxxx has no access to content://media/external/images/media/243</code> 的异常</p>
+<p> 当应用拥有了 <code>WRITE_EXTERNAL_STORAGE</code> 权限后，当修改其他 App 的文件时，会 throw 另一个 Exception <code>android.app.RecoverableSecurityException: xxxxxx has no access to content://media/external/images/media/243</code></p>
+<p> 如果我们将这个 RecoverableSecurityException 给 Catch 住，并向用户申请修改该图片的权限，用户操作后，我们就可以在 onActivityResult 回调中拿到结果进行操作了</p>
+</li>
+</ol>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">val</span> editImageUri = Uri.parse(<span class="string">&quot;content://media/external/images/media/<span class="subst">$&#123;editOtherAppMediaId.text&#125;</span>&quot;</span>)</span><br><span class="line">    editImage(editImageUri)</span><br><span class="line">&#125;<span class="keyword">catch</span> (rse : RecoverableSecurityException)&#123;</span><br><span class="line"></span><br><span class="line">    rse.printStackTrace()</span><br><span class="line">    requestForOtherAppFiles(REQUEST_CODE_FOR_EDIT_IMAGE,rse)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">requestForOtherAppFiles</span><span class="params">(requestCode: <span class="type">Int</span>, rse: <span class="type">RecoverableSecurityException</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// In your code, handle IntentSender.SendIntentException.</span></span><br><span class="line">        startIntentSenderForResult(</span><br><span class="line">            rse.userAction.actionIntent.intentSender</span><br><span class="line">            , requestCode,</span><br><span class="line">            <span class="literal">null</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="literal">null</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActivityResult</span><span class="params">(requestCode: <span class="type">Int</span>, resultCode: <span class="type">Int</span>, <span class="keyword">data</span>: <span class="type">Intent</span>?)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onActivityResult(requestCode, resultCode, <span class="keyword">data</span>)</span><br><span class="line">    <span class="keyword">if</span> (resultCode == Activity.RESULT_OK)&#123;</span><br><span class="line">        <span class="keyword">when</span>(requestCode)&#123;</span><br><span class="line">            REQUEST_CODE_FOR_EDIT_IMAGE -&gt;&#123;</span><br><span class="line">                editImage(editImageUri)</span><br><span class="line">            &#125;</span><br><span class="line">            REQUEST_CODE_FOR_DELETE_IMAGE -&gt;&#123;</span><br><span class="line">                contentResolver.delete(deleteImageUri,<span class="literal">null</span>,<span class="literal">null</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如下图，用户会收到这样的提示框。<br><img src="https://i.loli.net/2020/04/19/htFfIQ94J25XpBV.jpg"></p>
+<p>PS. 当用户授权后，我们对该文件进行修改后，后续对这个文件的修改就不再会抛出 <code>RecoverableSecurityException</code> 了</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Android MediaStore Api 使用</p><p><a href="https://ppting.me/2020/04/19/2020_04_19_how_to_use_Android_MediaStore_Api/">https://ppting.me/2020/04/19/2020_04_19_how_to_use_Android_MediaStore_Api/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>PPTing</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2020-04-19</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-02-04</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/04/19/2020_04_19_about_Storage_Access_Framework/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Android 存储访问框架 Storage Access Framework</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/04/12/2020_04_12_about_android_file_path/"><span class="level-item">关于 Android 的文件存储目录</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "911b826306d5cc5f0fb88fa65145e916",
+            repo: "ppting.github.io",
+            owner: "PPTing",
+            clientID: "8ee6c32324c60fd9fe83",
+            clientSecret: "caabfe4dc60fd4b19575bcb4b754d5068a0f7a41",
+            admin: ["PPTing"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://www.gravatar.com/avatar/f10df62c29905b9b4ba7aaa81b28f152?s=128" alt="PPTing"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">PPTing</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">45</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">7</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">7</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/PPTing" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/PPTing"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#关于权限"><span class="level-left"><span class="level-item">1</span><span class="level-item">关于权限</span></span></a></li><li><a class="level is-mobile" href="#关于-MimeType"><span class="level-left"><span class="level-item">2</span><span class="level-item">关于 MimeType</span></span></a></li><li><a class="level is-mobile" href="#创建-x2F-保存文件"><span class="level-left"><span class="level-item">3</span><span class="level-item">创建/保存文件</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#疑问-1"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">疑问 1</span></span></a></li></ul></li><li><a class="level is-mobile" href="#删除自己应用创建的文件"><span class="level-left"><span class="level-item">4</span><span class="level-item">删除自己应用创建的文件</span></span></a></li><li><a class="level is-mobile" href="#查询自己应用的文件"><span class="level-left"><span class="level-item">5</span><span class="level-item">查询自己应用的文件</span></span></a></li><li><a class="level is-mobile" href="#访问其他-App-的文件"><span class="level-left"><span class="level-item">6</span><span class="level-item">访问其他 App 的文件</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/HTML5/"><span class="level-start"><span class="level-item">HTML5</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/Mac/"><span class="level-start"><span class="level-item">Mac</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E4%BA%A7%E5%93%81/"><span class="level-start"><span class="level-item">产品</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%88%B7%E6%9C%BA/"><span class="level-start"><span class="level-item">刷机</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%9D%82%E8%B0%88/"><span class="level-start"><span class="level-item">杂谈</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-12-22T16:00:00.000Z">2021-12-23</time></p><p class="title"><a href="/2021/12/23/2021_12_23_concurrenthashmap/">ConcurrentHashMap 源码阅读笔记</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-11-23T16:00:00.000Z">2021-11-24</time></p><p class="title"><a href="/2021/11/24/2021_11_24_rxjava/">RxJava2 原理解析</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-11-20T16:00:00.000Z">2021-11-21</time></p><p class="title"><a href="/2021/11/21/2021_11_21_java_proxy/">Java 动态代理</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-05-07T06:17:39.000Z">2021-05-07</time></p><p class="title"><a href="/2021/05/07/2021_05_07_bitmap_in_android/">Android 中的图片内存</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-20T16:00:00.000Z">2021-04-21</time></p><p class="title"><a href="/2021/04/21/2021_04_21_about_handler_in_android/">Handler 消息机制</a></p></div></article></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/favicon.ico" alt="PPTing&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2022 PPTing</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/PPTing"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

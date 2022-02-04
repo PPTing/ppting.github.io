@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>暑假充电之————HTML5 NO.2 - PPTing&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="PPTing&#039;s Blog"><meta name="msapplication-TileImage" content="/favicon.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="PPTing&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="##暑假充电之——HTML5学习笔记NO.2 span{color:blue} ###&amp;lt;ul&amp;gt;&amp;lt;ol&amp;gt;&amp;lt;li&amp;gt;标签语法：&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;信息&amp;lt;&amp;#x2F;li&amp;gt;&amp;lt;&amp;#x2F;ul&amp;gt;此标签为无序标签，显示效果会在“信息”前面加一个小黑点 ·&amp;lt;ol&amp;gt;&amp;lt;li&amp;gt;信息&amp;lt;&amp;#x2F;li&amp;gt;&amp;lt;&amp;#x2F;ol&amp;gt;此标签为有"><meta property="og:type" content="blog"><meta property="og:title" content="暑假充电之————HTML5 NO.2"><meta property="og:url" content="https://ppting.me/2014/07/08/2014_07_08_learn_html5_no2/"><meta property="og:site_name" content="PPTing&#039;s Blog"><meta property="og:description" content="##暑假充电之——HTML5学习笔记NO.2 span{color:blue} ###&amp;lt;ul&amp;gt;&amp;lt;ol&amp;gt;&amp;lt;li&amp;gt;标签语法：&amp;lt;ul&amp;gt;&amp;lt;li&amp;gt;信息&amp;lt;&amp;#x2F;li&amp;gt;&amp;lt;&amp;#x2F;ul&amp;gt;此标签为无序标签，显示效果会在“信息”前面加一个小黑点 ·&amp;lt;ol&amp;gt;&amp;lt;li&amp;gt;信息&amp;lt;&amp;#x2F;li&amp;gt;&amp;lt;&amp;#x2F;ol&amp;gt;此标签为有"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://ppting.me/img/og_image.png"><meta property="article:published_time" content="2014-07-08T14:16:56.000Z"><meta property="article:modified_time" content="2022-02-04T05:37:51.981Z"><meta property="article:author" content="PPTing"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://ppting.me/2014/07/08/2014_07_08_learn_html5_no2/"},"headline":"暑假充电之————HTML5 NO.2","image":["https://ppting.me/img/og_image.png"],"datePublished":"2014-07-08T14:16:56.000Z","dateModified":"2022-02-04T05:37:51.981Z","author":{"@type":"Person","name":"PPTing"},"publisher":{"@type":"Organization","name":"PPTing's Blog","logo":{"@type":"ImageObject","url":"https://ppting.me/favicon.ico"}},"description":"##暑假充电之——HTML5学习笔记NO.2 span{color:blue} ###&lt;ul&gt;&lt;ol&gt;&lt;li&gt;标签语法：&lt;ul&gt;&lt;li&gt;信息&lt;&#x2F;li&gt;&lt;&#x2F;ul&gt;此标签为无序标签，显示效果会在“信息”前面加一个小黑点 ·&lt;ol&gt;&lt;li&gt;信息&lt;&#x2F;li&gt;&lt;&#x2F;ol&gt;此标签为有"}</script><link rel="canonical" href="https://ppting.me/2014/07/08/2014_07_08_learn_html5_no2/"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-51029889-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-51029889-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start -->
+        <script>
+            function switchTab(element) {
+                const id = element.parentElement.id;
+                const tabElements = element.parentElement.parentElement.children;
+                const contentElements = element.parentElement.parentElement.parentElement.parentElement.children[1].children;
+                for (let i = 0; i < tabElements.length; i++) {
+                    const $tab = tabElements[i];
+                    const $content = contentElements[i];
+                    if ($tab.id === id) {
+                        $tab.classList.add('is-active');
+                    } else {
+                        $tab.classList.remove('is-active');
+                    }
+                    if ($content.id === id) {
+                        $content.classList.remove('is-hidden');
+                    } else {
+                        $content.classList.add('is-hidden');
+                    }
+                }
+            }
+        </script>
+        <!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="PPTing's Blog" type="application/atom+xml">
+</head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/favicon.ico" alt="PPTing&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/PPTing"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2014-07-08T14:16:56.000Z" title="7/8/2014, 10:16:56 PM">2014-07-08</time>发表</span><span class="level-item"><time dateTime="2022-02-04T05:37:51.981Z" title="2/4/2022, 1:37:51 PM">2022-02-04</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/HTML5/">HTML5</a></span><span class="level-item">11 分钟读完 (大约1601个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">暑假充电之————HTML5 NO.2</h1><div class="content"><p>##暑假充电之——HTML5学习笔记NO.2</p>
+<style>span{color:blue}</style>
+<p>###<code>&lt;ul&gt;&lt;ol&gt;&lt;li&gt;</code>标签<br><br>语法：<br><br><code>&lt;ul&gt;&lt;li&gt;信息&lt;/li&gt;&lt;/ul&gt;</code><br><br>此标签为无序标签，显示效果会在“信息”前面加一个小黑点 ·<br><br><code>&lt;ol&gt;&lt;li&gt;信息&lt;/li&gt;&lt;/ol&gt;</code><br><br>此标签为有序标签，显示效果为在每个信息点前面加数字编号（默认从1开始）<br></p>
+<span id="more"></span>
+<p>###<code>&lt;div&gt;</code>标签<br><br>语法：<br><br><code>&lt;div id=&quot;板块名称&quot;&gt;信息&lt;/div&gt;</code><br><br><code>&lt;div&gt;</code>标签相当于一个容器，用id属性为<code>&lt;div&gt;</code>提供唯一的名称<br><br>###<code>&lt;table&gt;</code>表格标签<br><br>创建表格有4个元素：table，tr（行），th（单元格），tb（表头）<br><br>语法：<br></p>
+<pre><code>&lt;table&gt;
+    &lt;table summary=&quot;XXX&quot;&gt;
+    &lt;caption&gt;表格标题&lt;/caption&gt;
+    &lt;tr&gt;
+        &lt;th&gt;表格表头&lt;/th&gt;(默认加粗居中)
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;表格单元格&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+</code></pre>
+<p>边框属性：在<table>中添加<code>&lt;table border=&quot;1&quot;&gt;</code>，会显示边框<br>###<code>&lt;a&gt;</code>链接标签<br><br>####链接<br><code>&lt;a hrdf=&quot;目标网址&quot;&gt;链接显示文字&lt;/a&gt;</code><br><em>本语句会在当前浏览器窗口打开此链接</em><br><br><code>&lt;a href=&quot;目标网站&quot; target=&quot;_blank&quot;&gt;链接显示文字&lt;/a&gt;</code><br><br><em>本语句会在新的浏览器窗口打开此链接</em>，但是此属性不符合w3c规范，在HTML5中被废除了<br><br>可以用图片作为链接，只需要将<em><strong>“链接显示文字”</strong></em>修改成图片的位置<br><br>例如：<br><br><code>&lt;a href=&quot;/example/html/lastpage.html&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;/i/eg_buttonnext.gif&quot; /&gt;&lt;/a&gt;</code><br>####使用mailto在网页中链接Email地址<br><br>语法：<br><br><code>&lt;a href=&quot;mailto:Email@email.com&quot;?subject=test&amp;body=test&gt;链接文字&lt;/a&gt;</code></p>
+<table border ="1">
+<caption>mailto功能表</caption>
+<tr>
+<th>功能</th>
+<th>关键字</th>
+</tr>
+<tr>
+<td>邮箱地址</td>
+<td>mailto</td>
+<tr>
+<td>抄送地址</td>
+<td>cc=</td>
+</tr>
+<tr>
+<td>密件抄送地址</td>
+<td>bcc=</td>
+</tr>
+<tr>
+<td>多收件人</td>
+<td>；</td>
+</tr>
+<tr>
+<td>邮件主题</td>
+<td>subject=</td>
+</tr>
+<tr>
+<td>邮件内容</td>
+<td>body=</td>
+</tr>
+</table>
+<span>PS:若mailto后面有多个参数，第一个参数必须以***“？”***开头，后面的每一个都由***“&”***分隔</span><br>
+####name属性（书签）
+name属性规定锚（anchor）的名称<br/>
+`<a name ="name">锚（显示在页面上的文本）</a>`<br>
+先命名一个锚：`<a name="tips">基本的注意事项 - 有用的提示</a>`<br>
+再创建指向该锚的链接：`<a href="#tips">有用的提示</a>`<br>
+例：
+<a href="#ppting">文本输入输出框</a><br>
+
+<p>###<code>&lt;img&gt;</code>图片标签<br><br>语法：<br><br><code>&lt;img src=&quot;图片地址&quot; alt=&quot;下载失败时的替换文本&quot; title=&quot;提示文本&quot; width=&quot;&quot; height=&quot;&quot;&gt;</code><br><br><span>src:标识图像位置<br><br>alt:指定图像的描述性文本<br><br>title:提供在图像可见时对图像的描述（鼠标滑过时的显示文本）<br><br>width:宽<br><br>height:高<br><br></span><br><br>###<code>&lt;form&gt;</code>标签<br><br>在HTML5中可以使用id进行串联表单<br>比如：</p>
+<pre><code>&lt;html&gt;
+&lt;form id=&quot;ting&quot;&gt;&lt;/form&gt;
+&lt;input type=&quot;text&quot; name=&quot;text&quot; value =&quot;&quot; form=&quot;ting&quot;&gt;
+&lt;/html&gt;
+</code></pre>
+<p>####使用表单标签，与用户交互<br><br>语法：<br><br>    <code>&lt;form&gt;</code><br><br>    <code>&lt;input method=&quot;传送方式&quot; action=&quot;服务器文件&quot;&gt;</code><br><br>    <code>&lt;/form&gt;</code></p>
+<ul>
+<li>action:用户输入的数据被传输到的地方</li>
+<li>method:数据传送的方式（get/post）</li>
+</ul>
+####<a name="ppting">文本输入输出框</a><br>
+语法:<br>
+    
+<pre><code>`&lt;form&gt;`&lt;br&gt;
+`&lt;input type=&quot;text/password&quot; name=&quot;名称&quot; value=&quot;文本&quot;&gt;`&lt;br&gt;
+`&lt;/form&gt;`
+</code></pre>
+<ul>
+<li>type:
+a.当type为text时，为文本输入框（明文）<br>
+b.当type为password时，为密码输入框（星号点）<br>
+</li>
+<li>name:为文本框命名，方便后台程序ASP/PHP调用</li>
+<li>value:为文本输入框设置默认值</li>
+</ul>
+####文本域<br>
+语法：<br>
+`<textarea rows="行数" cols="列数">文本</textarea>`<br>
+举例如下：
+
+
+<pre><code>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+        &lt;title&gt;文本域&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;form action=&quot;save.php&quot; method=&quot;post&quot; &gt;
+            &lt;label&gt;个人简介：&lt;/label&gt;
+            &lt;textarea cols=&quot;20&quot; rows=&quot;3&quot;&gt;别试了，只是一个例子而已o(╯□╰)o没有后台的&lt;/textarea&gt;
+            &lt;input type=&quot;submit&quot; value=&quot;确定&quot;  name=&quot;submit&quot; /&gt;
+            &lt;input type=&quot;reset&quot; value=&quot;重置&quot;  name=&quot;reset&quot; /&gt;
+        &lt;/form&gt; 
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>效果如下：</p>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>文本域</title>
+</head>
+<body>
+<form action="save.php" method="post" >
+<label>测试框</label>
+<textarea cols="20" rows="3">别试了，只是一个例子而已o(╯□╰)o没有后台的</textarea>
+<input type="submit" value="确定"  name="submit" />
+<input type="reset" value="重置"  name="reset" />
+</form> 
+</body>
+</html><br>
+####单选域，复选框<br>
+语法：<br>
+`<input type="radio/checkbox" value="值" name="名称 checked="checked"">文本`<br>
+type:
+&nbsp;当type为radio时，控件为单选框；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当type为checkbox时，控件为复选框。<br>
+value:提交数据到服务器的值（供后台程序PHP使用）<br>
+name:维空间命名，以备后台程序PHP，ASP使用<br>
+checked:当设置为checked="checked"时，被默认选中<br>
+<span>PS：单选框的 **name** 值要一样</span><br>
+举例：
+
+
+<pre><code>&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+        &lt;title&gt;单选框、复选框&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;form action=&quot;save.php&quot; method=&quot;post&quot; &gt;
+            &lt;label&gt;性别:&lt;/label&gt;
+            &lt;label&gt;男&lt;/label&gt;
+            &lt;input type=&quot;radio&quot; value=&quot;1&quot;  name=&quot;sex&quot; /&gt;
+            &lt;label&gt;女&lt;/label&gt;
+            &lt;input type=&quot;radio&quot; value=&quot;2&quot;  name=&quot;sex&quot; /&gt;
+        &lt;/form&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>效果如下：</p>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>单选框、复选框</title>
+</head>
+<body>
+<form action="save.php" method="post" >
+    <label>是否成年:</label>
+    <label>是</label>
+    <input type="radio" value="1"  name="sex" />
+    <label>否</label>
+    <input type="radio" value="0"  name="sex" />
+</form>
+</body>
+</html>
+####下拉列表<br>
+语法:<br>
+`<option value="提交值（向服务器端提交的值）">选项</option>`<br>
+<span>当加入selected="seleted"属性时，该选项被默认选中</span><br>
+<span>当在`<select>`标签中设置multiple="multiple"属性时，为多选框，按住Ctrl选择</span>
+举例：
+
+<pre><code>&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+        &lt;title&gt;下拉列表框&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;form action=&quot;save.php&quot; method=&quot;post&quot; &gt;
+            &lt;label&gt;职业:&lt;/label&gt;
+            &lt;select&gt;
+                  &lt;option value=&quot;学生&quot;&gt;学生&lt;/option&gt;
+                  &lt;option value=&quot;工人&quot;&gt;工人&lt;/option&gt;
+                  &lt;option value=&quot;教师&quot;&gt;教师&lt;/option&gt;
+                  &lt;option value=&quot;企业家&quot; selected=&quot;selected&quot;&gt;企业家&lt;/option&gt;&lt;!--将企业家设置为默认值&gt;
+            &lt;/select&gt;
+        &lt;/form&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>效果如下：</p>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>下拉列表框</title>
+</head>
+<body>
+<form action="save.php" method="post" >
+    <label>职业:</label>
+    <select>
+      <option value="学生">学生</option>
+                      <option value="工人">工人</option>
+                      <option value="教师">教师</option>
+                      <option value="企业家" selected="selected">企业家</option><!--将企业家设置为默认值>
+    </select>
+</form>
+</body>
+</html>
+####提交按钮和重置按钮<br>
+语法：<br>
+提交按钮：
+`<input type="submit" value="提交">`<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value：按钮上显示的文字<br>
+重置按钮：
+`<input type="reset" value="重置">`<br>
+功能：重置输入框的内容为默认值<br>
+举例如下：
+
+<pre><code>&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+        &lt;title&gt;重置按钮&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;form action=&quot;save.php&quot; method=&quot;post&quot; &gt;
+        &lt;label&gt;爱好:&lt;/label&gt;
+        &lt;select&gt;
+              &lt;option value=&quot;学生&quot;&gt;学生&lt;/option&gt;
+              &lt;option value=&quot;工人&quot;&gt;工人&lt;/option&gt;
+              &lt;option value=&quot;教师&quot;&gt;教师&lt;/option&gt;
+              &lt;option value=&quot;企业家&quot; selected=&quot;selected&quot;&gt;企业家&lt;/option&gt;&lt;!--将企业家设置为默认值&gt;
+        &lt;/select&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;确定&quot;  /&gt;
+        &lt;input type=&quot;reset&quot; value=&quot;重置&quot;  /&gt;
+        &lt;/form&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>效果：<br>    <html><br>        <head><br>            <meta http-equiv="Content-Type" content="text/html; charset=utf-8"><br>            <title>重置按钮</title><br>        </head><br>        <body><br>            <form action="save.php" method="post" ><br>            <label>爱好:</label><br>            <select><br>                  <option value="学生">学生</option><br>                  <option value="工人">工人</option><br>                  <option value="教师">教师</option><br>                  <option value="企业家" selected="selected">企业家</option>&lt;!–将企业家设置为默认值&gt;<br>            </select><br>            <input type="submit" value="确定"  /><br>            <input type="reset" value="重置"  /><br>            </form><br>        </body><br>    </html><br>###总结<br><br>####表单方面语法基本相同<br><code>&lt;input type=&quot;X&quot; value=&quot;Y&quot; name=&quot;Z&quot;&gt;</code></p>
+<table>
+<table summary="表单功能">
+<caption>表单功能</caption>
+<tr>
+<th>X(type)</th>
+<th>功能</th>
+</tr>
+<tr>
+<td>text</td>
+<td>文本输入框（明文）</td>
+</tr>
+<tr>
+<td>password</td>
+<td>密码输入框（星号）</td>
+</tr>
+<tr>
+<td>radio</td>
+<td>单选框</td>
+</tr>
+<tr>
+<td>checkbox</td>
+<td>复选框</td>
+</tr>
+<tr>
+<td>submit</td>
+<td>提交按钮</td>
+</tr>
+<tr>
+<td>reset</td>
+<td>重置按钮</td>
+</tr>
+<tr>
+<td>button</td>
+<td>按钮</td>
+</tr>
+<tr>
+<td>email</td>
+<td>限制用户输入必须为Email类型</td>
+</tr>
+<tr>
+<td>url</td>
+<td>限制用户输入必须为URL类型</td>
+</tr>
+<tr>
+<td>date</td>
+<td>限制用户输入必须为日期类型</td>
+</tr>
+<tr>
+<td>time</td>
+<td>限制用户输入必须为时间类型</td>
+</tr>
+<tr>
+<td>month</td>
+<td>限制用户输入必须为月份类型</td>
+</tr>
+<tr>
+<td>week</td>
+<td>限制用户输入必须为周类型</td>
+</tr>
+<tr>
+<td>number</td>
+<td>限制用户输入必须为数字类型</td>
+</tr>
+<tr>
+<td>range</td>
+<td>产生一个滑动条的表单</td>
+</tr>
+<tr>
+<td>search</td>
+<td>产生一个搜索意义的表单，配合result="n"属性C</td>
+</tr>
+<tr>
+<td>color</td>
+<td>产生一个颜色选择的表单</td>
+</tr>
+</table>
+<br>
+####HTML5新增表单属性
+![HTML5新增表单属性.JPG](https://ooo.0o0.ooo/2017/01/07/5870e84b7d77f.jpg)
+`autofocus="autofocus"`<br>
+`placeholder="默认值"//不会提交给后台`<br>
+`required="required"`<br>
+`pattern="\d{}"//正则表达`<br>
+
+<p>####Autocomplete列表<br>Datalist标签配合option标签实现的自动填充表单功能：</p>
+<pre><code>&lt;input type=&quot;search&quot; name=&quot;move&quot; list=&quot;search&quot; &gt;
+&lt;datalist id=&quot;search&quot; &gt;
+    &lt;option&gt;A&lt;/option&gt;
+    &lt;option&gt;B&lt;/option&gt;
+    &lt;option&gt;C&lt;/option&gt;
+&lt;/datalist&gt;
+</code></pre>
+<p>####output的使用<br>用来输出Input的数值<br>例子：</p>
+<pre><code>&lt;form action=&quot;&quot; method=&quot;post&quot; oninput=&quot;result.value=parseInt(no1.value)+parseInt(no2.value)&quot;&gt;
+        &lt;input type=&quot;number&quot; name=&quot;no1&quot; value=&quot;&quot; /&gt;
+        &lt;input type=&quot;number&quot; name=&quot;no2&quot; value=&quot;&quot; /&gt;
+        &lt;output name=&quot;result&quot;&gt;&lt;/output&gt;
+&lt;/form&gt;
+</code></pre>
+<p>在滑动条中可以设置<code>max=&quot;x&quot; step=&quot;y&quot;</code>即最大值为10，而只能移动到2的倍数<br><br>####其他</p>
+<table>
+<tr><td>name</td><td>名称（为文本框命名方便后台程序调用）</td></tr>
+<tr><td>value</td><td>文本框的默认值/显示的文字</td></tr>
+<tr><td>method</td><td>传送方式</td></tr>
+</table> <br>
+`<p></p>`产生的是一个段落，会有空一行，而`<br>`是换行（回车）而没有产生新的段落，如果需要换行使用`<br>`而不要使用`<p></p>`<br>
+`<sup>`定义上标文本<br>
+`<sub>`定义下标文本<br>
+定义缩略词：`<abbr title ="etcetera">etc</abbr>`<br>
+<abbr title ="etcetera">etc</abbr><br>
+定义首字母大写：`<acronym title="World Wide Web">WWW</acronym>`<br>
+<acronym title="World Wide Web">WWW</acronym><br>
+当鼠标移至缩略词时，会展示完整版本（即title）
+<p>
+`<del>删除字效果</del>`
+`<ins>下划线效果</ins>`
+</p>
+####HTML属性
+align="center"  居中<br>
+align="bottom"  默认对齐<br>
+align="middle"  在文本中<br>
+align="top"     在文本上<br>
+bgcolor="color" 颜色<br>
+例如：<br>`<h1 align="center"> `<br>`<body bgcolor="yellow"><br>`</div><div class="article-licensing box"><div class="licensing-title"><p>暑假充电之————HTML5 NO.2</p><p><a href="https://ppting.me/2014/07/08/2014_07_08_learn_html5_no2/">https://ppting.me/2014/07/08/2014_07_08_learn_html5_no2/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>PPTing</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2014-07-08</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-02-04</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2014/07/12/2014_07_14_learn_html5_no3/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">暑假充电之————HTML5 NO.3</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2014/07/07/2014_07_07_learn_html5_no1/"><span class="level-item">暑假充电之————HTML5 NO.1</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "2d256bbe82f7bc68877dfc683c2c7904",
+            repo: "ppting.github.io",
+            owner: "PPTing",
+            clientID: "8ee6c32324c60fd9fe83",
+            clientSecret: "caabfe4dc60fd4b19575bcb4b754d5068a0f7a41",
+            admin: ["PPTing"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://www.gravatar.com/avatar/f10df62c29905b9b4ba7aaa81b28f152?s=128" alt="PPTing"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">PPTing</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">45</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">7</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">7</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/PPTing" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/PPTing"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/HTML5/"><span class="level-start"><span class="level-item">HTML5</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/Mac/"><span class="level-start"><span class="level-item">Mac</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E4%BA%A7%E5%93%81/"><span class="level-start"><span class="level-item">产品</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%88%B7%E6%9C%BA/"><span class="level-start"><span class="level-item">刷机</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%9D%82%E8%B0%88/"><span class="level-start"><span class="level-item">杂谈</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-12-22T16:00:00.000Z">2021-12-23</time></p><p class="title"><a href="/2021/12/23/2021_12_23_concurrenthashmap/">ConcurrentHashMap 源码阅读笔记</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-11-23T16:00:00.000Z">2021-11-24</time></p><p class="title"><a href="/2021/11/24/2021_11_24_rxjava/">RxJava2 原理解析</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-11-20T16:00:00.000Z">2021-11-21</time></p><p class="title"><a href="/2021/11/21/2021_11_21_java_proxy/">Java 动态代理</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-05-07T06:17:39.000Z">2021-05-07</time></p><p class="title"><a href="/2021/05/07/2021_05_07_bitmap_in_android/">Android 中的图片内存</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-20T16:00:00.000Z">2021-04-21</time></p><p class="title"><a href="/2021/04/21/2021_04_21_about_handler_in_android/">Handler 消息机制</a></p></div></article></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/favicon.ico" alt="PPTing&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2022 PPTing</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/PPTing"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

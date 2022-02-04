@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>关于 Android 的文件存储目录 - PPTing&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="PPTing&#039;s Blog"><meta name="msapplication-TileImage" content="/favicon.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="PPTing&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="众所周知，在 Android 中，文件的存储有多个路径可供存储，也提供了多个 Api 使用，那这些 Api 到底是用来是哪个目录，又有什么区别呢。"><meta property="og:type" content="blog"><meta property="og:title" content="关于 Android 的文件存储目录"><meta property="og:url" content="https://ppting.me/2020/04/12/2020_04_12_about_android_file_path/"><meta property="og:site_name" content="PPTing&#039;s Blog"><meta property="og:description" content="众所周知，在 Android 中，文件的存储有多个路径可供存储，也提供了多个 Api 使用，那这些 Api 到底是用来是哪个目录，又有什么区别呢。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://i.loli.net/2020/04/12/vKrRneJ5ysNDgLm.jpg"><meta property="og:image" content="https://i.loli.net/2020/04/12/S6x5utifrnPIRGz.jpg"><meta property="og:image" content="https://i.loli.net/2020/04/12/68YELOjySGlI4PN.jpg"><meta property="article:published_time" content="2020-04-11T16:00:00.000Z"><meta property="article:modified_time" content="2022-02-04T05:40:15.096Z"><meta property="article:author" content="PPTing"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://i.loli.net/2020/04/12/vKrRneJ5ysNDgLm.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://ppting.me/2020/04/12/2020_04_12_about_android_file_path/"},"headline":"关于 Android 的文件存储目录","image":["https://i.loli.net/2020/04/12/vKrRneJ5ysNDgLm.jpg","https://i.loli.net/2020/04/12/S6x5utifrnPIRGz.jpg","https://i.loli.net/2020/04/12/68YELOjySGlI4PN.jpg"],"datePublished":"2020-04-11T16:00:00.000Z","dateModified":"2022-02-04T05:40:15.096Z","author":{"@type":"Person","name":"PPTing"},"publisher":{"@type":"Organization","name":"PPTing's Blog","logo":{"@type":"ImageObject","url":"https://ppting.me/favicon.ico"}},"description":"众所周知，在 Android 中，文件的存储有多个路径可供存储，也提供了多个 Api 使用，那这些 Api 到底是用来是哪个目录，又有什么区别呢。"}</script><link rel="canonical" href="https://ppting.me/2020/04/12/2020_04_12_about_android_file_path/"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-51029889-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-51029889-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start -->
+        <script>
+            function switchTab(element) {
+                const id = element.parentElement.id;
+                const tabElements = element.parentElement.parentElement.children;
+                const contentElements = element.parentElement.parentElement.parentElement.parentElement.children[1].children;
+                for (let i = 0; i < tabElements.length; i++) {
+                    const $tab = tabElements[i];
+                    const $content = contentElements[i];
+                    if ($tab.id === id) {
+                        $tab.classList.add('is-active');
+                    } else {
+                        $tab.classList.remove('is-active');
+                    }
+                    if ($content.id === id) {
+                        $content.classList.remove('is-hidden');
+                    } else {
+                        $content.classList.add('is-hidden');
+                    }
+                }
+            }
+        </script>
+        <!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="PPTing's Blog" type="application/atom+xml">
+</head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/favicon.ico" alt="PPTing&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/PPTing"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-04-11T16:00:00.000Z" title="4/12/2020, 12:00:00 AM">2020-04-12</time>发表</span><span class="level-item"><time dateTime="2022-02-04T05:40:15.096Z" title="2/4/2022, 1:40:15 PM">2022-02-04</time>更新</span><span class="level-item">12 分钟读完 (大约1843个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">关于 Android 的文件存储目录</h1><div class="content"><p>众所周知，在 Android 中，文件的存储有多个路径可供存储，也提供了多个 Api 使用，那这些 Api 到底是用来是哪个目录，又有什么区别呢。</p>
+<span id="more"></span>
+
+<h2 id="内部存储和外部存储"><a href="#内部存储和外部存储" class="headerlink" title="内部存储和外部存储"></a>内部存储和外部存储</h2><p>首先，要先知道 Android 存储中分为内部存储(Internal storage)和外部存储(External storage)</p>
+<blockquote>
+<p>下面用 com.application.id 作为我们的 applicationId 来举例</p>
+</blockquote>
+<h3 id="内部存储"><a href="#内部存储" class="headerlink" title="内部存储"></a>内部存储</h3><ul>
+<li>内部存储指的是 App 私有的目录，即 &#x2F;data&#x2F;data&#x2F;com.application.id&#x2F;<blockquote>
+<p>有些手机的目录是 &#x2F;data&#x2F;user&#x2F;0&#x2F;com.application.id&#x2F;<br>实际上是同一个目录，从下图可见，<code>/data/user/0</code> 目录是一个软连接，其实际指向的目录即 <code>/data/data</code></p>
+</blockquote>
+</li>
+</ul>
+<p>存储在这个目录下的文件是 App 私有的，其他 App 无法读写(root 用户除外)，目录会随着 App 的卸载而被删除<br><img src="https://i.loli.net/2020/04/12/vKrRneJ5ysNDgLm.jpg"></p>
+<h3 id="外部存储"><a href="#外部存储" class="headerlink" title="外部存储"></a>外部存储</h3><blockquote>
+<p>外部存储包含私有外部存储和公共目录存储</p>
+</blockquote>
+<h4 id="私有外部存储"><a href="#私有外部存储" class="headerlink" title="私有外部存储"></a>私有外部存储</h4><p>私有外部存储是指 <code>/storage/emulated/0/Android/data/com.application.id</code> </p>
+<p>我们会在根目录里看到 <code>/sdcard</code>、<code>/mnt/sdcard</code>、<code>/storage/emulated/self/primary</code> 下的文件都跟上述的 <code>/storage/emulated/0</code> 中的文件一模一样，这不禁会让人感到疑惑，实际上，通过调研发现这些目录也都是软连接，可以看到其对应实际目录</p>
+<blockquote>
+<p><code>/sdcard</code> -&gt; <code>/storage/self/primary</code></p>
+<p><code>/storage/self/primary</code> -&gt; <code>/mnt/user/0/primary</code></p>
+<p><code>/mnt/user/0/primary</code> -&gt; <code>/storage/emulated/0</code></p>
+</blockquote>
+<p>所以其实到最后，其目录指向的都是我们的 <code>/storage/emulated/0</code> 目录</p>
+<p>在私有外部存储中，App 可以读写自己的目录(<code>/storage/emulated/0/Android/data/com.application.id</code>)下的文件，如果 Api 大于 19，不需要申请写权限。<br>如果需要读写其他 App 的私有外部存储目录，则需要声明读写权限，若高于 23，还需要动态进行权限申请。</p>
+<p>私有外部存储的目录也会随着 App 的卸载而被删除</p>
+<blockquote>
+<p>写权限 android.permission.WRITE_EXTERNAL_STORAGE</p>
+</blockquote>
+<p><strong>那么为什么会有这样的设计呢？这个 0 又代表什么</strong><br>我的猜测是 Android 系统中可以有多用户，这个 0 代表了当前用户，如果有第二个用户，应该就会有 1 的出现，使用软连接的方式，会保证在使用 api 获取到相对应的路径时，指向正确的用户下的文件目录，避免多个用户之间的文件系统混乱<br>当然，这只是我的猜测，未曾验证</p>
+<h4 id="公共目录存储"><a href="#公共目录存储" class="headerlink" title="公共目录存储"></a>公共目录存储</h4><p>是指 sdcard 中根目录中的公共目录，即 <code>/storage/emulated/0</code>，例如图片文件夹(<code>/storage/emulated/0/DCIM</code>)，音乐文件(<code>/storage/emulated/0/Music</code>)</p>
+<p>这部分的目录是共享的，所以如果 App 往这个目录下读写文件，需要申请读写权限，并且在 App 卸载后不会被删除。</p>
+<h2 id="那我们接着看-Api-的使用"><a href="#那我们接着看-Api-的使用" class="headerlink" title="那我们接着看 Api 的使用"></a>那我们接着看 Api 的使用</h2><h3 id="获取内部存储目录"><a href="#获取内部存储目录" class="headerlink" title="获取内部存储目录"></a>获取内部存储目录</h3><blockquote>
+<p>无需申请权限</p>
+</blockquote>
+<ul>
+<li><p>Context.getFilesDir()</p>
+<blockquote>
+<p>获取内部存储中 files 目录<br><br>&#x2F;data&#x2F;data&#x2F;com.application.id&#x2F;files</p>
+</blockquote>
+</li>
+<li><p>Context.getCacheDir()</p>
+<blockquote>
+<p>获取内部存储中 cache 目录<br><br>&#x2F;data&#x2F;data&#x2F;com.application.id&#x2F;cache</p>
+</blockquote>
+</li>
+<li><p>Context.getDataDir()&#x2F;&#x2F;Api &gt;&#x3D; 24</p>
+<blockquote>
+<p>获取内部存储的存储目录的绝对路径<br><br>&#x2F;data&#x2F;data&#x2F;com.application.id</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="获取外部私有存储目录"><a href="#获取外部私有存储目录" class="headerlink" title="获取外部私有存储目录"></a>获取外部私有存储目录</h3><blockquote>
+<p>无需申请权限</p>
+</blockquote>
+<ul>
+<li><p>Context.getExternalFilesDir(String type)</p>
+<blockquote>
+<p>获取外部私有存储中的 files 目录或其子文件夹<br><br>&#x2F;storage&#x2F;emulated&#x2F;0&#x2F;Android&#x2F;data&#x2F;com.application.id&#x2F;files<br><br>or <br><br>&#x2F;storage&#x2F;emulated&#x2F;0&#x2F;Android&#x2F;data&#x2F;com.application.id&#x2F;files&#x2F;type</p>
+</blockquote>
+</li>
+<li><p>Context.getExternalCacheDir()</p>
+<blockquote>
+<p>获取外部私有存储中的 cache 目录<br><br>&#x2F;storage&#x2F;emulated&#x2F;0&#x2F;Android&#x2F;data&#x2F;com.application.id&#x2F;cache</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="获取公有目录"><a href="#获取公有目录" class="headerlink" title="获取公有目录"></a>获取公有目录</h3><blockquote>
+<p>读写需要权限<br>写入权限 android.Manifest.permission#WRITE_EXTERNAL_STORAGE<br>读取权限 android.Manifest.permission#READ_EXTERNAL_STORAGE</p>
+</blockquote>
+<h4 id="对应的-API"><a href="#对应的-API" class="headerlink" title="对应的 API"></a>对应的 API</h4><ul>
+<li><p>Environment.getExternalStorageDirectory()</p>
+<blockquote>
+<p>获取公有目录<br>&#x2F;storage&#x2F;emulated&#x2F;0</p>
+</blockquote>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * type</span></span><br><span class="line"><span class="comment"> * #DIRECTORY_MUSIC</span></span><br><span class="line"><span class="comment"> * #DIRECTORY_PODCASTS</span></span><br><span class="line"><span class="comment"> * #DIRECTORY_RINGTONES</span></span><br><span class="line"><span class="comment"> * #DIRECTORY_ALARMS</span></span><br><span class="line"><span class="comment"> * #DIRECTORY_NOTIFICATIONS</span></span><br><span class="line"><span class="comment"> * #DIRECTORY_PICTURES</span></span><br><span class="line"><span class="comment"> * #DIRECTORY_MOVIES</span></span><br><span class="line"><span class="comment"> * #DIRECTORY_DOWNLOADS</span></span><br><span class="line"><span class="comment"> * #DIRECTORY_DCIM</span></span><br><span class="line"><span class="comment"> * #DIRECTORY_DOCUMENTS</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Environment.getExternalStoragePublicDirectory(String type)</p>
+<blockquote>
+<p>获取公有目录下对应的类型文件夹<br><br>&#x2F;storage&#x2F;emulated&#x2F;0&#x2F;DCIM 等</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Android-10-分区存储机制"><a href="#Android-10-分区存储机制" class="headerlink" title="Android 10 分区存储机制"></a>Android 10 分区存储机制</h2><p>然而，在 Android 10(Api 29) 上，我们发现通过 <code>Environment</code> 获取路径的 api 已经被标记为 Deprecated 的了</p>
+<p><img src="https://i.loli.net/2020/04/12/S6x5utifrnPIRGz.jpg"></p>
+<p>这…可咋整呢</p>
+<p>其实，这对于 Android 用户来说，是一件好事来着。<br>随着 Android 的发展，Google 对用户的隐私越来越看重了，慢慢地收紧了开发者对用户设备 sdcard 的读写权限</p>
+<p>从 Android 10 开始，对于 Target Api 为 29 的应用，根据官方文档所描述，其访问权限范围限定为外部存储，即分区存储(Scoped Storage)</p>
+<p>简单来说，应用只能通过访问<code>Context.getFilesDir()</code> 等 api 访问自己的私有目录(<code>/data/data/packagename/</code>)，以及通过<code>Context.getExternalFilesDir(&quot;&quot;)</code> 等 api 访问外部存储中自己应用的目录(<code>/Android/data/packagename/</code>)，无需申请权限，这个行为同之前一样，没有变动。</p>
+<p>在 <code>Target api &lt; 29</code> 时，只要应用获取到了 <code>WRITE_EXTERNAL_STORAGE</code> 权限，就可以对整个 sdcard 目录进行读取，包括其他应用的 <code>外部私有存储目录(/Android/data/otherAppPackageName/)</code></p>
+<p>但是，在 <code>Target Api &gt;=29</code> 后，在 Android 10 设备上<strong>全新安装</strong>的应用，即便应用获得了<code>WRITE_EXTERNAL_STORAGE</code>权限后，应用也无法直接通过 <code>Java File Api</code> (例如 <code>Environment.getExternalStorageDirectory()</code>) 对 sdcard 中的非自己应用创建的文件进行读写操作。</p>
+<blockquote>
+<p>这里的全新安装加了着重提示，应用是从 Target Api &#x3D; 28 覆盖安装升级到 Target Api 29 的话，即便是安装在 Android 10 的手机上，若获得了<code>WRITE_EXTERNAL_STORAGE</code>权限，通过 Java File Api 仍然能够对 sdcard 中的任意文件进行读写操作</p>
+</blockquote>
+<p>那…问题来了，在 Target Api &gt;&#x3D; 29 上</p>
+<ol>
+<li>应用自身需要将多媒体文件进行存储读取，该怎么做呢。</li>
+<li>需要访问用户其他 APP 存储的文件(例如照片，视频)，又该如何适配呢</li>
+</ol>
+<p>在 Android 的规范中，如果用户需要保存多媒体文件到手机中，应保存到共享目录(Share storage)中，以便其他应用访问，例如音乐应用中用户下载的音乐，拍照应用用户拍摄的照片，视频等</p>
+<p>下面的表格总结了以上的内容，而至于如何通过 MediaStore Api 和 Storage Access Framework 进行增删查改，我们<del>下文再续</del></p>
+<p>下文来啦：</p>
+<p><a href="https://ppting.me/2020/04/19/2020_04_19_how_to_use_Android_MediaStore_Api/">Android MediaStore Api 使用</a></p>
+<p><a href="https://ppting.me/2020/04/19/2020_04_19_about_Storage_Access_Framework/">Android 存储访问框架 Storage Access Framework</a></p>
+<p><img src="https://i.loli.net/2020/04/12/68YELOjySGlI4PN.jpg" alt="-w1235"></p>
+<p>如有错误，望各位斧正</p>
+<p>Google 官方文档：<br><a target="_blank" rel="noopener" href="https://developer.android.com/about/versions/10/privacy/changes">Android 10 中的隐私权变更</a><br><a target="_blank" rel="noopener" href="https://developer.android.com/training/data-storage/files/external">将文件保存到外部存储</a><br><a target="_blank" rel="noopener" href="https://developer.android.com/training/data-storage/files/external-scoped">管理分区外部存储访问</a><br><a target="_blank" rel="noopener" href="https://developer.android.com/training/data-storage">Data and file storage overview</a><br><a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/providers/document-provider">使用存储访问框架打开文件</a><br><a target="_blank" rel="noopener" href="https://developer.android.com/training/data-storage/shared">Overview of shared storage</a></p>
+<p>本文参考文章：</p>
+<blockquote>
+<p>感谢各位大大的分享</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://feng.moe/archives/47/">Android Q 存储机制大变化</a><br><a target="_blank" rel="noopener" href="https://www.liaohuqiu.net/cn/posts/storage-in-android/">Android 存储使用参考</a><br><a target="_blank" rel="noopener" href="https://juejin.im/post/5e43ab2bf265da572660f777">Android 10 分区存储介绍及百度APP适配实践</a></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>关于 Android 的文件存储目录</p><p><a href="https://ppting.me/2020/04/12/2020_04_12_about_android_file_path/">https://ppting.me/2020/04/12/2020_04_12_about_android_file_path/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>PPTing</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2020-04-12</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-02-04</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/04/19/2020_04_19_how_to_use_Android_MediaStore_Api/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Android MediaStore Api 使用</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/04/12/2020_04_12_about_android_so_lib/"><span class="level-item">那些和 so 库有关的问题</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "5142a24c3dc7e052c8e47d527d86ba98",
+            repo: "ppting.github.io",
+            owner: "PPTing",
+            clientID: "8ee6c32324c60fd9fe83",
+            clientSecret: "caabfe4dc60fd4b19575bcb4b754d5068a0f7a41",
+            admin: ["PPTing"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://www.gravatar.com/avatar/f10df62c29905b9b4ba7aaa81b28f152?s=128" alt="PPTing"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">PPTing</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">45</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">7</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">7</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/PPTing" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/PPTing"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#内部存储和外部存储"><span class="level-left"><span class="level-item">1</span><span class="level-item">内部存储和外部存储</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#内部存储"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">内部存储</span></span></a></li><li><a class="level is-mobile" href="#外部存储"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">外部存储</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#私有外部存储"><span class="level-left"><span class="level-item">1.2.1</span><span class="level-item">私有外部存储</span></span></a></li><li><a class="level is-mobile" href="#公共目录存储"><span class="level-left"><span class="level-item">1.2.2</span><span class="level-item">公共目录存储</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#那我们接着看-Api-的使用"><span class="level-left"><span class="level-item">2</span><span class="level-item">那我们接着看 Api 的使用</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#获取内部存储目录"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">获取内部存储目录</span></span></a></li><li><a class="level is-mobile" href="#获取外部私有存储目录"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">获取外部私有存储目录</span></span></a></li><li><a class="level is-mobile" href="#获取公有目录"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">获取公有目录</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#对应的-API"><span class="level-left"><span class="level-item">2.3.1</span><span class="level-item">对应的 API</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#Android-10-分区存储机制"><span class="level-left"><span class="level-item">3</span><span class="level-item">Android 10 分区存储机制</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/HTML5/"><span class="level-start"><span class="level-item">HTML5</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/Mac/"><span class="level-start"><span class="level-item">Mac</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E4%BA%A7%E5%93%81/"><span class="level-start"><span class="level-item">产品</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%88%B7%E6%9C%BA/"><span class="level-start"><span class="level-item">刷机</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%9D%82%E8%B0%88/"><span class="level-start"><span class="level-item">杂谈</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-12-22T16:00:00.000Z">2021-12-23</time></p><p class="title"><a href="/2021/12/23/2021_12_23_concurrenthashmap/">ConcurrentHashMap 源码阅读笔记</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-11-23T16:00:00.000Z">2021-11-24</time></p><p class="title"><a href="/2021/11/24/2021_11_24_rxjava/">RxJava2 原理解析</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-11-20T16:00:00.000Z">2021-11-21</time></p><p class="title"><a href="/2021/11/21/2021_11_21_java_proxy/">Java 动态代理</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-05-07T06:17:39.000Z">2021-05-07</time></p><p class="title"><a href="/2021/05/07/2021_05_07_bitmap_in_android/">Android 中的图片内存</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-20T16:00:00.000Z">2021-04-21</time></p><p class="title"><a href="/2021/04/21/2021_04_21_about_handler_in_android/">Handler 消息机制</a></p></div></article></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/favicon.ico" alt="PPTing&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2022 PPTing</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/PPTing"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
