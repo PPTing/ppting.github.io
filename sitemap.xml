@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://ppting.me/2021/05/07/2021_05_07_bitmap_in_android/</loc>
+    
+    <lastmod>2022-02-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://ppting.me/2021/01/01/measure_view/</loc>
+    
+    <lastmod>2022-02-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ppting.me/2014/05/26/2014_05_26_ultimate/</loc>
     
     <lastmod>2022-02-12</lastmod>
@@ -30,15 +48,6 @@
   
   <url>
     <loc>https://ppting.me/2019/01/01/preview_recyclerview_in_preview_window/</loc>
-    
-    <lastmod>2022-02-12</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://ppting.me/2022/02/12/measure_view/</loc>
     
     <lastmod>2022-02-12</lastmod>
     
@@ -93,15 +102,6 @@
   
   <url>
     <loc>https://ppting.me/2021/11/21/2021_11_21_java_proxy/</loc>
-    
-    <lastmod>2022-02-12</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://ppting.me/2022/02/12/2021_05_07_bitmap_in_android/</loc>
     
     <lastmod>2022-02-12</lastmod>
     
