@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>去除 Apk 中的重复资源文件 - PPTing&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="PPTing&#039;s Blog"><meta name="msapplication-TileImage" content="/favicon.ico"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="PPTing&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="在 Android Apk 包体积治理的项目中，对于资源文件的治理是其中很重要的一部分，其中，做好前期的压缩删除等工作是前提条件，但在后续的开发迭代过程中，如何进行长期的治理、预警和自动化，是值得深入探讨的问题 在包体积治理的过程中，我们知道对于 apk 的组成，其中资源文件占了很大的一部分，需要对其进行处理"><meta property="og:type" content="blog"><meta property="og:title" content="去除 Apk 中的重复资源文件"><meta property="og:url" content="https://ppting.me/2022/03/28/2022_03_28_remove_repeat_res_in_apk/"><meta property="og:site_name" content="PPTing&#039;s Blog"><meta property="og:description" content="在 Android Apk 包体积治理的项目中，对于资源文件的治理是其中很重要的一部分，其中，做好前期的压缩删除等工作是前提条件，但在后续的开发迭代过程中，如何进行长期的治理、预警和自动化，是值得深入探讨的问题 在包体积治理的过程中，我们知道对于 apk 的组成，其中资源文件占了很大的一部分，需要对其进行处理"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://s2.loli.net/2022/03/29/rPfeRE3oKAM4T21.png"><meta property="og:image" content="https://s2.loli.net/2022/03/29/JDC6c7InLGgdRrE.png"><meta property="og:image" content="https://s2.loli.net/2022/03/29/MsbS9Ytm7vofcxw.png"><meta property="article:published_time" content="2022-03-28T13:41:53.000Z"><meta property="article:modified_time" content="2022-03-29T13:57:21.390Z"><meta property="article:author" content="PPTing"><meta property="article:tag" content="Android"><meta property="article:tag" content="插件"><meta property="article:tag" content="CI/CD"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://s2.loli.net/2022/03/29/rPfeRE3oKAM4T21.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://ppting.me/2022/03/28/2022_03_28_remove_repeat_res_in_apk/"},"headline":"去除 Apk 中的重复资源文件","image":["https://s2.loli.net/2022/03/29/rPfeRE3oKAM4T21.png","https://s2.loli.net/2022/03/29/JDC6c7InLGgdRrE.png","https://s2.loli.net/2022/03/29/MsbS9Ytm7vofcxw.png"],"datePublished":"2022-03-28T13:41:53.000Z","dateModified":"2022-03-29T13:57:21.390Z","author":{"@type":"Person","name":"PPTing"},"publisher":{"@type":"Organization","name":"PPTing's Blog","logo":{"@type":"ImageObject","url":"https://ppting.me/favicon.ico"}},"description":"在 Android Apk 包体积治理的项目中，对于资源文件的治理是其中很重要的一部分，其中，做好前期的压缩删除等工作是前提条件，但在后续的开发迭代过程中，如何进行长期的治理、预警和自动化，是值得深入探讨的问题 在包体积治理的过程中，我们知道对于 apk 的组成，其中资源文件占了很大的一部分，需要对其进行处理"}</script><link rel="canonical" href="https://ppting.me/2022/03/28/2022_03_28_remove_repeat_res_in_apk/"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-51029889-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-51029889-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start -->
+        <script>
+            function switchTab(element) {
+                const id = element.parentElement.id;
+                const tabElements = element.parentElement.parentElement.children;
+                const contentElements = element.parentElement.parentElement.parentElement.parentElement.children[1].children;
+                for (let i = 0; i < tabElements.length; i++) {
+                    const $tab = tabElements[i];
+                    const $content = contentElements[i];
+                    if ($tab.id === id) {
+                        $tab.classList.add('is-active');
+                    } else {
+                        $tab.classList.remove('is-active');
+                    }
+                    if ($content.id === id) {
+                        $content.classList.remove('is-hidden');
+                    } else {
+                        $content.classList.add('is-hidden');
+                    }
+                }
+            }
+        </script>
+        <!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="PPTing's Blog" type="application/atom+xml">
+</head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/favicon.ico" alt="PPTing&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/PPTing"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-03-28T13:41:53.000Z" title="3/28/2022, 9:41:53 PM">2022-03-28</time>发表</span><span class="level-item"><time dateTime="2022-03-29T13:57:21.390Z" title="3/29/2022, 9:57:21 PM">2022-03-29</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Android/">Android</a></span><span class="level-item">9 分钟读完 (大约1331个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">去除 Apk 中的重复资源文件</h1><div class="content"><p>在 Android Apk 包体积治理的项目中，对于资源文件的治理是其中很重要的一部分，其中，做好前期的压缩删除等工作是前提条件，但在后续的开发迭代过程中，如何进行长期的治理、预警和自动化，是值得深入探讨的问题</p>
+<p>在包体积治理的过程中，我们知道对于 apk 的组成，其中资源文件占了很大的一部分，需要对其进行处理</p>
+<span id="more"></span>
+
+
+<p>首当其冲就是压缩图片资源，png 转为 webp，将没有 alpha 通道的 png 转为 jpg，将剩余的 png 文件进行压缩，但不在本文的讨论范围内，略过下次再表</p>
+<p>在我们的项目中，由于项目组件化的架构，各个业务 module 不存在依赖关系因此无法相互访问，由于一些历史原因，部分资源文件也不在 UI 库中，导致开发过程中各业务同学常见的做法就是「从 A Module中的资源文件夹拷贝资源文件到 B Module 中，并加上前缀」导致最终的 apk 中会存在多个文件一样，但仅仅是名称不同的资源文件，导致 apk 中存在多份冗余文件</p>
+<p>于是这个插件应运而生，用来在编译期去除 apk 中的重复资源文件，当然也会输出对应的日志文件，可以用来作为预警日志提醒开发同学引入了重复的文件，检查是否必要</p>
+<p>我们知道 resources.arsc 文件类似于一个 table，存储了资源文件的 id 及其对应的 dpi 的文件路径，如下图所示</p>
+<p>于是我们的想法就是将相同的资源文件删除，并修改其在 resources.arsc 中相对应的映射关系</p>
+<p><img src="https://s2.loli.net/2022/03/29/rPfeRE3oKAM4T21.png" alt="apk_monitor_plugin_doc_resource_arsc.png"></p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>既然有了想法，当然是避免重复造轮子，先从 Google 搜索了一番解决方案，找到美团的一份技术文档 <a target="_blank" rel="noopener" href="https://tech.meituan.com/2017/04/07/android-shrink-overall-solution.html">Android App包瘦身优化实践</a> 以及 Github 上的 <a target="_blank" rel="noopener" href="https://github.com/makeloveandroid/Optimizeapp">Optimizeapp</a> 项目，借鉴这两个项目，编写了自己的去重 Gradle 插件，现已开源，详见 <a target="_blank" rel="noopener" href="https://github.com/PPTing/ApkMonitorPlugin/tree/master">ApkMonitorPlugin</a></p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>Android 的打包流程中，会将 res 中的资源文件等记录到 <code>resources.arsc</code> 文件中，我们需要在这个产物生成后，对齐进行处理</p>
+<p>而 <code>process$&#123;variantName&#125;Resource</code> Task 会在 <code>build/intermediates/processed_res/$&#123;variantName&#125;/out</code> 目录下生成 <code>resources-$&#123;variantName&#125;.ap_</code> 压缩文件，其中包含了 <code>AndroidManifest.xml</code>、<code>resources.arsc</code>、<code>drawable</code> 等等文件。</p>
+<p>我们需要在打包流程中在该 Task 后增加一个 Task，对 <code>resources-$&#123;variantName&#125;.ap_</code>文件进行处理即可</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">val</span> processResource = project.tasks.getByName(<span class="string">&quot;process<span class="subst">$&#123;variantName&#125;</span>Resources&quot;</span>)</span><br><span class="line">processResource.doLast &#123;</span><br><span class="line">    <span class="comment">//xxxxx</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="无法在-Android-11-设备上安装"><a href="#无法在-Android-11-设备上安装" class="headerlink" title="无法在 Android 11 设备上安装"></a>无法在 Android 11 设备上安装</h3><p>当使用上述的方法对 <code>resource.arsc</code> 中的映射关系进行替换后，在 targetSdk &lt; 30 的项目中测试正常，但当 targetSdk ≥ 30 并在 Android 11 的设备上运行，却会安装失败，提示以下的错误：</p>
+<blockquote>
+<p>-124: Failed parse during installPackageLI: Targeting R+ (version 30 and above) requires the resources.arsc of installed APKs to be stored uncompressed and aligned on a 4-byte boundary</p>
+</blockquote>
+<p>在 Android R+(即 sdkVersion ≥ 30) 以后，Android 不允许压缩 <code>resource.arsc</code> 文件，原因在于</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://developer.android.com/about/versions/11/behavior-changes-11#compressed-resource-file">行为变更：以 Android 11 为目标平台的应用</a> </p>
+<p>如果以 Android 11（API 级别 30）或更高版本为目标平台的应用包含压缩的 resources.arsc 文件或者如果此文件未按 4 字节边界对齐，应用将无法安装。如果存在其中任意一种情况，系统将无法对此文件进行内存映射。无法进行内存映射的资源表必须读入 RAM 中的缓冲区，从而给系统造成不必要的内存压力，并大大增加设备的 RAM 使用量。</p>
+</blockquote>
+<h3 id="检查"><a href="#检查" class="headerlink" title="检查"></a>检查</h3><p>我们可以通过 <a target="_blank" rel="noopener" href="https://developer.android.com/studio/command-line/zipalign">zipalign</a> 工具检查 apk 中的文件是否被压缩</p>
+<p>zipalign 可执行文件可以在 Android Sdk 的 buildTools 中找到，例如 <code>/Users/XXX/Library/Android/sdk/build-tools/31.0.0/zipalign</code></p>
+<p>我们将打包出来的 apk 使用 zipalign 进行对齐检查，可以看到 <code>resources.arsc</code> 的确是被压缩了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zipalign -c -v 4 app-debug.apk | grep arsc</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/03/29/JDC6c7InLGgdRrE.png" alt="apk_monitor_plugin_doc_zipalign.png"></p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>那是不是就没有办法了？</p>
+<p>那倒也不是，我们在删除重复的资源文件和修改 <code>resource.arsc</code> 后，需要对文件重新压缩为 <code>.ap_</code> 文件，在这个时候对于 <code>resources.arsc</code> 文件的压缩方式设置为 <code>STORED</code> 即可</p>
+<p>如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> entry = ZipEntry(subPath).apply &#123;</span><br><span class="line">    setLevel(ZipOutputStream.STORED)</span><br><span class="line">    setMethod(ZipEntry.STORED);</span><br><span class="line">    setCompressedSize(file.length());</span><br><span class="line">    setSize(file.length());</span><br><span class="line">    <span class="keyword">val</span> crc = CRC32();</span><br><span class="line">    crc.update(file.readBytes())</span><br><span class="line">    setCrc(crc.getValue());</span><br><span class="line">&#125;</span><br><span class="line">putNextEntry(entry)</span><br></pre></td></tr></table></figure>
+
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p>通过以上方式修改后，可见 <code>resource.arsc</code> 文件没有被压缩了，也能顺利在 Android R 以上的设备上正常安装了</p>
+<p><img src="https://s2.loli.net/2022/03/29/MsbS9Ytm7vofcxw.png" alt="apk_monitor_plugin_doc_zipalign_after_stored.png"></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>去除 Apk 中的重复资源文件</p><p><a href="https://ppting.me/2022/03/28/2022_03_28_remove_repeat_res_in_apk/">https://ppting.me/2022/03/28/2022_03_28_remove_repeat_res_in_apk/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>PPTing</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-03-28</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-03-29</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Android/">Android</a><a class="link-muted mr-2" rel="tag" href="/tags/%E6%8F%92%E4%BB%B6/">插件</a><a class="link-muted mr-2" rel="tag" href="/tags/CI-CD/">CI/CD</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/03/19/2022_03_19_viewmodel/"><span class="level-item">ViewModel 原理</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "61d18e056193dbfaa32313ae58ec7e40",
+            repo: "ppting.github.io",
+            owner: "PPTing",
+            clientID: "8ee6c32324c60fd9fe83",
+            clientSecret: "caabfe4dc60fd4b19575bcb4b754d5068a0f7a41",
+            admin: ["PPTing"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://www.gravatar.com/avatar/f10df62c29905b9b4ba7aaa81b28f152?s=128" alt="PPTing"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">PPTing</p><p class="is-size-6 is-block">Android Developer | Former Frisbee Player</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Guangzhou,China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">50</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">14</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">28</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/PPTing" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Email" href="mailto:zhengkejian0@gmail.com"><i class="fas fa-inbox"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/PPTing"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#实现"><span class="level-left"><span class="level-item">实现</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#方法"><span class="level-left"><span class="level-item">方法</span></span></a></li></ul></li><li><a class="level is-mobile" href="#问题"><span class="level-left"><span class="level-item">问题</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#无法在-Android-11-设备上安装"><span class="level-left"><span class="level-item">无法在 Android 11 设备上安装</span></span></a></li><li><a class="level is-mobile" href="#检查"><span class="level-left"><span class="level-item">检查</span></span></a></li><li><a class="level is-mobile" href="#解决方案"><span class="level-left"><span class="level-item">解决方案</span></span></a></li><li><a class="level is-mobile" href="#结果"><span class="level-left"><span class="level-item">结果</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/favicon.ico" alt="PPTing&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2022 PPTing</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/PPTing"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
