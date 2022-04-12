@@ -2,9 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://ppting.me/2022/02/24/2022_02_24_Java_JUC_ReentrantLock/</loc>
+    
+    <lastmod>2022-04-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://ppting.me/2022/04/09/2022_04_09_lazy_init_in_kotlin/</loc>
+    
+    <lastmod>2022-04-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ppting.me/2020/04/19/2020_04_19_how_to_use_Android_MediaStore_Api/</loc>
     
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-03-30</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -41,15 +59,6 @@
     <loc>https://ppting.me/2018/06/07/hashmap/</loc>
     
     <lastmod>2022-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://ppting.me/2022/02/24/2022_02_24_Java_JUC_ReentrantLock/</loc>
-    
-    <lastmod>2022-02-24</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -463,7 +472,7 @@
 
   <url>
     <loc>https://ppting.me/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -471,196 +480,203 @@
   
   <url>
     <loc>https://ppting.me/tags/Android/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/%E8%AE%BE%E5%A4%87/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/git/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/Mac/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/Retrofit/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/HTTP/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/%E7%BB%84%E4%BB%B6%E5%8C%96/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/Trick/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/Lint/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/%E6%95%88%E7%8E%87/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/FixBug/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/WebView/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/Storage/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/Encode/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/Bitmap/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/Handler/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/Proxy/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/RxJava/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/Thread/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/%E5%B9%B6%E5%8F%91/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/Map/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/Charles/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/View/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/RecyclerView/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/ViewModel/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/JetPack/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/%E6%8F%92%E4%BB%B6/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/tags/CI-CD/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ppting.me/tags/Kotlin/</loc>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -669,98 +685,105 @@
   
   <url>
     <loc>https://ppting.me/categories/%E7%94%9F%E6%B4%BB/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/categories/%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/categories/%E6%95%99%E7%A8%8B/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/categories/%E5%89%8D%E7%AB%AF/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/categories/Android/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/categories/git/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/categories/%E8%AE%B0%E5%BD%95/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/categories/Hexo/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/categories/Blog/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/categories/Java/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/categories/%E6%BA%90%E7%A0%81/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/categories/%E4%BA%A7%E5%93%81/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ppting.me/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
-    <lastmod>2022-03-29</lastmod>
+    <lastmod>2022-04-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ppting.me/categories/Kotlin/</loc>
+    <lastmod>2022-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
